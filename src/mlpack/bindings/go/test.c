@@ -20,5 +20,4 @@ int main(int argc, char* argv[]){
   C_SetPassed("scale");
   C_SetParamBool("verbose", true);
   C_SetPassed("verbose");
-
 }

@@ -81,7 +81,9 @@ extern "C" void C_SetParamBool(const char *identifier, bool value)
 
 extern "C" void C_SetParamString(const char *identifier, const char *value)
 {
-  util::SetParam(identifier, value);
+  std::string val;
+  val.assign(value);
+  util::SetParam(identifier, val);
 }
 
 extern "C" void C_SetParamMat(const char *identifier, const MatrixInput *m)

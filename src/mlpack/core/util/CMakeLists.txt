@@ -4,6 +4,9 @@ set(SOURCES
   arma_traits.hpp
   arma_config.hpp
   arma_config_check.hpp
+  arma_util.h
+  arma_util.hpp
+  arma_util.cpp
   backtrace.hpp
   backtrace.cpp
   cli.hpp

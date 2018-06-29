@@ -27,8 +27,6 @@ namespace util {
 template<typename T>
 inline void SetParam(const std::string& identifier, T& value)
 {
-  std::string prog = CLI::ProgramName();
-  std::cout << "[c++]  " << prog  << std::endl;
   CLI::GetParam<T>(identifier) = std::move(value);
 }
 
