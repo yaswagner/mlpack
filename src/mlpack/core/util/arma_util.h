@@ -10,8 +10,6 @@
 extern "C" {
 #endif
 
-typedef void MatrixInput;
-
 extern void to_matrix(const double mat[], int row, int col);
 
 #if defined(__cplusplus) || defined(c_plusplus)
