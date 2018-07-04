@@ -12,6 +12,9 @@ extern "C" {
 
 extern void to_matrix(const double mat[], int row, int col);
 
+extern void *output();
+
+
 #if defined(__cplusplus) || defined(c_plusplus)
 }
 #endif
