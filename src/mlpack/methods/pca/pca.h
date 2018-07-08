@@ -1,8 +1,9 @@
-#ifndef GO_CLI_UTIL_H
-#define GO_CLI_UTIL_H
+#ifndef GO_PCA_H
+#define GO_PCA_H
 
 #include <stdint.h>
 #include <stddef.h>
+#include <math.h>
 
 #if defined(__cplusplus) || defined(c_plusplus)
 extern "C" {

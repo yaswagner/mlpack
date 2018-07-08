@@ -1,14 +1,18 @@
-#include "pca_impl.hpp"
-#include "pca.h"
+#ifndef GO_PCA_CUTIL_HPP
+#define GO_PCA_CUTIL_HPP
+
+
 #include "pca_main.cpp"
 
+
 namespace mlpack {
-namespace util {
+
 
 extern "C" void C_mlpackMain()
 {
   mlpackMain();
 }
 
-} // namespace pca
 } // namespace mlpack
+
+#endif
