@@ -26,7 +26,6 @@ extern void C_SetParamInt(const char *identifier, int value);
 extern void C_SetParamFloat(const char *identifier, float value);
 extern void C_SetParamBool(const char *identifier, bool value);
 extern void C_SetParamString(const char *identifier, const char *value);
-extern void C_SetParamMat(const char *identifier, const MatrixInput *m);
 
 #if defined(__cplusplus) || defined(c_plusplus)
 }

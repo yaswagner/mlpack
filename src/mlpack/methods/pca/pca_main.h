@@ -3,7 +3,6 @@
 
 #include <stdint.h>
 #include <stddef.h>
-#include <math.h>
 
 #if defined(__cplusplus) || defined(c_plusplus)
 extern "C" {

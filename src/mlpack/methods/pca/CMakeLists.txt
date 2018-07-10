@@ -3,7 +3,9 @@
 set(SOURCES
   pca.hpp
   pca_impl.hpp
-  pca_main.cpp
+  pca_util.hpp
+  pca_util.cpp
+  pca_main.h
 #  pca_nomain.hpp
 #  pca_nomain.cpp
 )
@@ -18,6 +20,9 @@ endforeach()
 # Append sources (with directory name) to list of all mlpack sources (used at
 # the parent scope).
 set(MLPACK_SRCS ${MLPACK_SRCS} ${DIR_SRCS} PARENT_SCOPE)
+
+add_library(pcalib STATIC pca_main.cpp)
+target_link_libraries(pcalib mlpack ${MLPACK_LIBRARIES})
 
 add_cli_executable(pca)
 add_python_binding(pca)

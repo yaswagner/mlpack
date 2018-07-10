@@ -1,5 +1,5 @@
-#include "mlpack/core/util/cli.hpp"
-#include "mlpack/core/util/cli_impl.hpp"
+#include "cli.hpp"
+#include "cli_impl.hpp"
 #include "cli_util.h"
 #include "cli_util.hpp"
 #include <list>
@@ -49,7 +49,7 @@ extern "C" void C_ClearSettings()
   CLI::ClearSettings();
 }
 
-extern "C" void C_SetPassed(const char* name)
+extern "C" void C_SetPassed(const char *name)
 {
   CLI::SetPassed(name);
 }
@@ -84,11 +84,6 @@ extern "C" void C_SetParamString(const char *identifier, const char *value)
   std::string val;
   val.assign(value);
   util::SetParam(identifier, val);
-}
-
-extern "C" void C_SetParamMat(const char *identifier, const MatrixInput *m)
-{
-  util::SetParam(identifier, m);
 }
 
 } // namespace mlpack
