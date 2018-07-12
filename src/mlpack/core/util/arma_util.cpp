@@ -51,7 +51,7 @@ int MLPACK_NumCols()
 // // Return the number of elems.
 int MLPACK_NumElems()
 {
-  std::string param = "outpout";
+  std::string param = "output";
   arma::mat output = CLI::GetParam<arma::mat>(param);
   return output.n_elem;
 }
