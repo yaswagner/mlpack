@@ -9,18 +9,16 @@
 extern "C" {
 #endif
 
-typedef struct MLPACK_Matrix MLPACK_Matrix;
+extern void MLPACK_NewMatrix(const char *identifier, const double mat[], int row, int col);
 
-extern void MLPACK_NewMatrix(const double mat[], int row, int col);
-
-extern void *MLPACK_MatrixPtr();
+extern void *MLPACK_MatrixPtr(const char *identifier);
 
 extern int MLPACK_NumRows();
 
 // Return the number of cols.
 extern int MLPACK_NumCols();
 
-// // Return the number of elems.
+// Return the number of elems.
 extern int MLPACK_NumElems();
 
 #if defined(__cplusplus) || defined(c_plusplus)

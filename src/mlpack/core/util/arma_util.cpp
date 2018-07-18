@@ -9,7 +9,7 @@ namespace util {
 
 extern "C" {
 
-void MLPACK_NewMatrix(const double mat[], int row, int col)
+void MLPACK_NewMatrix(const char *identifier, const double mat[], int row, int col)
 {
   // Advanced constructor.
   arma::mat input(const_cast<double*>(mat), row, col, false, true);
@@ -19,13 +19,11 @@ void MLPACK_NewMatrix(const double mat[], int row, int col)
   input.print();
 
   // Set input parameter with corresponding matrix in CLI.
-  std::string identifier = "input";
   SetParam(identifier, input);
 }
 
-void *MLPACK_MatrixPtr(){
-  std::string param = "output";
-  arma::mat output = CLI::GetParam<arma::mat>(param);
+void *MLPACK_MatrixPtr(const char *identifier){
+  arma::mat output = CLI::GetParam<arma::mat>(identifier);
   std::cout << "\nARMA OUTPUT:" << std::endl;
   output.print();
   void *ptr = GetMemory(output);

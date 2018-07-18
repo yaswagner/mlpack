@@ -1,5 +1,5 @@
-#ifndef GO_PCA_H
-#define GO_PCA_H
+#ifndef GO_PCA_UTIL_H
+#define GO_PCA_UTIL_H
 
 #include <stdint.h>
 #include <stddef.h>
@@ -8,7 +8,7 @@
 extern "C" {
 #endif
 
-extern void C_mlpackMain();
+extern void C_pca_mlpackMain();
 
 #if defined(__cplusplus) || defined(c_plusplus)
 }

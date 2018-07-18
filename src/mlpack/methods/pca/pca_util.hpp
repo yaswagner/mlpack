@@ -1,5 +1,6 @@
-#ifndef GO_PCA_CUTIL_HPP
-#define GO_PCA_CUTIL_HPP
+
+#ifndef GO_PCA_UTIL_HPP
+#define GO_PCA_UTIL_HPP
 
 #include "pca_impl.hpp"
 #include "pca.hpp"

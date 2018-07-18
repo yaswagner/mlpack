@@ -5,6 +5,9 @@ cmake_minimum_required(VERSION 2.8)
 set(SOURCES
   perceptron.hpp
   perceptron_impl.hpp
+  perceptron_util.cpp
+  perceptron_util.h
+  perceptron_util.hpp
 )
 
 add_subdirectory(initialization_methods)
@@ -18,6 +21,9 @@ endforeach()
 # Append sources (with directory name) to list of all mlpack sources (used at
 # the parent scope).
 set(MLPACK_SRCS ${MLPACK_SRCS} ${DIR_SRCS} PARENT_SCOPE)
+
+add_library(perceptronlib STATIC perceptron_main.cpp)
+target_link_libraries(perceptronlib mlpack ${MLPACK_LIBRARIES})
 
 add_cli_executable(perceptron)
 add_python_binding(perceptron)
