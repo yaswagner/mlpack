@@ -1,6 +1,3 @@
-#ifndef GO_PCA_UTIL_H
-#define GO_PCA_UTIL_H
-
 #include <stdint.h>
 #include <stddef.h>
 
@@ -8,10 +5,10 @@
 extern "C" {
 #endif
 
-extern void C_pca_mlpackMain();
+extern void *MLPACK_${PROGRAM_NAME}ModelPtr();
+
+extern void MLPACK_${PROGRAM_NAME}();
 
 #if defined(__cplusplus) || defined(c_plusplus)
 }
-#endif
-
 #endif

@@ -3,6 +3,8 @@
 set(SOURCES
   pca.hpp
   pca_impl.hpp
+#  pca_util.h
+#  pca_util.cpp
 #  pca_nomain.hpp
 #  pca_nomain.cpp
 )
@@ -18,8 +20,8 @@ endforeach()
 # the parent scope).
 set(MLPACK_SRCS ${MLPACK_SRCS} ${DIR_SRCS} PARENT_SCOPE)
 
-add_library(pcalib STATIC pca_main.cpp)
-target_link_libraries(pcalib ${MLPACK_LIBRARIES})
+# add_library(pcalib STATIC pca_main.cpp)
+# target_link_libraries(pcalib ${MLPACK_LIBRARIES})
 
 add_cli_executable(pca)
 add_python_binding(pca)

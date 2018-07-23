@@ -1,5 +1,5 @@
-#ifndef GO_PERCEPTRON_UTIL_H
-#define GO_PERCEPTRON_UTIL_H
+#ifndef GO_PCA_H
+#define GO_PCA_H
 
 #include <stdint.h>
 #include <stddef.h>
@@ -8,9 +8,7 @@
 extern "C" {
 #endif
 
-extern void *MLPACK_PerceptronModelPtr();
-
-extern void MLPACK_Perceptron();
+extern void MLPACK_pca();
 
 #if defined(__cplusplus) || defined(c_plusplus)
 }

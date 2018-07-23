@@ -12,14 +12,14 @@ extern "C" {
 void MLPACK_NewMatrix(const char *identifier, const double mat[], int row, int col)
 {
   // Advanced constructor.
-  arma::mat input(const_cast<double*>(mat), row, col, false, true);
+  arma::mat m(const_cast<double*>(mat), row, col, false, true);
 
   // Check if arma matrix is equivalent to Go's.
   std::cout << "\nARMA INPUT:" << std::endl;
-  input.print();
+  m.print();
 
   // Set input parameter with corresponding matrix in CLI.
-  SetParam(identifier, input);
+  SetParam(identifier, m);
 }
 
 void *MLPACK_MatrixPtr(const char *identifier){
@@ -31,26 +31,23 @@ void *MLPACK_MatrixPtr(const char *identifier){
 }
 
 // Return the number of rows.
-int MLPACK_NumRows()
+int MLPACK_NumRows(const char *identifier)
 {
-  std::string param = "output";
-  arma::mat output = CLI::GetParam<arma::mat>(param);
+  arma::mat output = CLI::GetParam<arma::mat>(identifier);
   return output.n_rows;
 }
 
 // Return the number of cols.
-int MLPACK_NumCols()
+int MLPACK_NumCols(const char *identifier)
 {
-  std::string param = "output";
-  arma::mat output = CLI::GetParam<arma::mat>(param);
+  arma::mat output = CLI::GetParam<arma::mat>(identifier);
   return output.n_cols;
 }
 
 // // Return the number of elems.
-int MLPACK_NumElems()
+int MLPACK_NumElems(const char *identifier)
 {
-  std::string param = "output";
-  arma::mat output = CLI::GetParam<arma::mat>(param);
+  arma::mat output = CLI::GetParam<arma::mat>(identifier);
   return output.n_elem;
 }
 

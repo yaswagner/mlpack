@@ -5,8 +5,7 @@
 
 namespace mlpack {
 
-
-extern "C" void *MLPACK_PerceptronModel()
+extern "C" void *MLPACK_PerceptronModelPtr()
 {
   return PerceptronModelPtr();
 }

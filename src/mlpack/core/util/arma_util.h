@@ -13,13 +13,11 @@ extern void MLPACK_NewMatrix(const char *identifier, const double mat[], int row
 
 extern void *MLPACK_MatrixPtr(const char *identifier);
 
-extern int MLPACK_NumRows();
+extern int MLPACK_NumRows(const char *identifier);
 
-// Return the number of cols.
-extern int MLPACK_NumCols();
+extern int MLPACK_NumCols(const char *identifier);
 
-// Return the number of elems.
-extern int MLPACK_NumElems();
+extern int MLPACK_NumElems(const char *identifier);
 
 #if defined(__cplusplus) || defined(c_plusplus)
 }

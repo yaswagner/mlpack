@@ -86,4 +86,14 @@ extern "C" void MLPACK_SetParamString(const char *identifier, const char *value)
   util::SetParam(identifier, val);
 }
 
+extern "C" void MLPACK_SetParamPtr(const char *identifier, const double *ptr, const bool copy)
+{
+  util::SetParamPtr(identifier, ptr, copy);
+}
+
+extern "C" bool MLPACK_HasParam(const char *identifier)
+{
+  return CLI::HasParam(identifier);
+}
+
 } // namespace mlpack
