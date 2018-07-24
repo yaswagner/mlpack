@@ -5,7 +5,7 @@
 extern "C" {
 #endif
 
-extern void *MLPACK_${PROGRAM_NAME}ModelPtr();
+extern void *MLPACK_${PROGRAM_NAME}_modelPtr();
 
 extern void MLPACK_${PROGRAM_NAME}();
 
