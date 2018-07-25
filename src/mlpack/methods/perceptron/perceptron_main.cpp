@@ -13,8 +13,6 @@
  * http://www.opensource.org/licenses/BSD-3-Clause for more information.
  */
 
-#define BINDING_TYPE BINDING_TYPE_PYX
-
 #include <mlpack/prereqs.hpp>
 #include <mlpack/core/util/cli.hpp>
 #include <mlpack/core/data/normalize_labels.hpp>

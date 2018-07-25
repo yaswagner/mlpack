@@ -3,8 +3,6 @@
 set(SOURCES
   pca.hpp
   pca_impl.hpp
-#  pca_util.h
-#  pca_util.cpp
 #  pca_nomain.hpp
 #  pca_nomain.cpp
 )

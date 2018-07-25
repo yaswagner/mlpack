@@ -5,8 +5,8 @@ cmake_minimum_required(VERSION 2.8)
 set(SOURCES
   perceptron.hpp
   perceptron_impl.hpp
-  perceptron.h
-  perceptron.cpp
+  # perceptron.h
+  # perceptron.cpp
 )
 
 add_subdirectory(initialization_methods)

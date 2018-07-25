@@ -5,5 +5,6 @@
 #
 #  * GENERATE_CPP_IN: the .h.in file to configure.
 #  * GENERATE_CPP_OUT: the .h file we'll generate.
+#  * PROGRAM_MAIN_FILE: the file containing the main() function.
 #  * PROGRAM_NAME: the name of the program (i.e. "pca").
 configure_file(${GENERATE_CPP_IN} ${GENERATE_CPP_OUT})

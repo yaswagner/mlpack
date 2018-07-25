@@ -1,6 +1,6 @@
 #include "pca_impl.hpp"
 #include "pca.hpp"
-#include "pca_main.cpp"
+// #include "pca_main.cpp"
 #include "pca.h"
 
 namespace mlpack {
