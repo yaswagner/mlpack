@@ -1,8 +1,8 @@
 /**
- * @file py_option.hpp
+ * @file go_option.hpp
  * @author Ryan Curtin
  *
- * The Python option type.
+ * The Go option type.
  *
  * mlpack is free software; you may redistribute it and/or modify it under the
  * terms of the 3-clause BSD license.  You should have received a copy of the
@@ -10,21 +10,21 @@
  * http://www.opensource.org/licenses/BSD-3-Clause for more information.
  */
 #ifndef MLPACK_BINDINGS_GO_GO_OPTION_HPP
-#define MLPACK_BINDINGS_GO_go_OPTION_HPP
+#define MLPACK_BINDINGS_GO_GO_OPTION_HPP
 
 #include <mlpack/core/util/param_data.hpp>
 // #include "get_param.hpp"
 // #include "get_printable_param.hpp"
 #include "print_class_defn.hpp"
-#include "print_defn.hpp"
-// #include "print_doc.hpp"
+// #include "print_defn.hpp"
+#include "print_doc.hpp"
 // #include "print_input_processing.hpp"
 // #include "print_output_processing.hpp"
-// #include "import_decl.hpp"
+#include "import_decl.hpp"
 
 namespace mlpack {
 namespace bindings {
-namespace python {
+namespace go {
 
 // Defined in mlpack_main.hpp.
 extern std::string programName;
@@ -33,7 +33,7 @@ extern std::string programName;
  * The Python option class.
  */
 template<typename T>
-class PyOption
+class GoOption
 {
  public:
   /**
@@ -41,7 +41,7 @@ class PyOption
    * with CLI. The testName parameter is not used and added for compatibility
    * reasons.
    */
-  PyOption(const T defaultValue,
+  GoOption(const T defaultValue,
            const std::string& identifier,
            const std::string& description,
            const std::string& alias,
@@ -81,19 +81,21 @@ class PyOption
     // pointers will be used by both the program that generates the pyx, and
     // also the binding itself.  (The binding itself will only use GetParam,
     // GetPrintableParam, and GetRawParam.)
-    CLI::GetSingleton().functionMap[data.tname]["GetParamGo"] = &GetParam<T>;
-    CLI::GetSingleton().functionMap[data.tname]["GetPrintableParamGo"] =
-        &GetPrintableParam<T>;
+    // CLI::GetSingleton().functionMap[data.tname]["GetParamGo"] = &GetParam<T>;
+    // CLI::GetSingleton().functionMap[data.tname]["GetPrintableParamGo"] =
+    //    &GetPrintableParam<T>;
 
     // These are used by the pyx generator.
     CLI::GetSingleton().functionMap[data.tname]["PrintClassDefnCPP"] =
         &PrintClassDefnCPP<T>;
-    CLI::GetSingleton().functionMap[data.tname]["PrintDefnCPP"] = &PrintDefn<T>;
-    CLI::GetSingleton().functionMap[data.tname]["PrintDocGo"] = &PrintDoc<T>;
-    CLI::GetSingleton().functionMap[data.tname]["PrintOutputProcessing"] =
-        &PrintOutputProcessing<T>;
-    CLI::GetSingleton().functionMap[data.tname]["PrintInputProcessing"] =
-        &PrintInputProcessing<T>;
+    CLI::GetSingleton().functionMap[data.tname]["PrintClassDefnH"] =
+        &PrintClassDefnH<T>;
+    //CLI::GetSingleton().functionMap[data.tname]["PrintDefnCPP"] = &PrintDefn<T>;
+    CLI::GetSingleton().functionMap[data.tname]["PrintDoc"] = &PrintDoc<T>;
+    //CLI::GetSingleton().functionMap[data.tname]["PrintOutputProcessing"] =
+    //    &PrintOutputProcessing<T>;
+    //CLI::GetSingleton().functionMap[data.tname]["PrintInputProcessing"] =
+    //    &PrintInputProcessing<T>;
     CLI::GetSingleton().functionMap[data.tname]["ImportDecl"] = &ImportDecl<T>;
 
     // Add the ParamData object, then store.  This is necessary because we may
@@ -106,7 +108,7 @@ class PyOption
   }
 };
 
-} // namespace python
+} // namespace go
 } // namespace bindings
 } // namespace mlpack
 

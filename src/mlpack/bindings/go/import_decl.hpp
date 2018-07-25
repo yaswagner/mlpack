@@ -17,7 +17,7 @@
 
 namespace mlpack {
 namespace bindings {
-namespace python {
+namespace go {
 
 /**
  * For a serializable type, print a cppclass definition.
@@ -98,7 +98,7 @@ void ImportDecl(const util::ParamData& d,
   ImportDecl<typename std::remove_pointer<T>::type>(d, *((size_t*) indent));
 }
 
-} // namespace python
+} // namespace go
 } // namespace bindings
 } // namespace mlpack
 

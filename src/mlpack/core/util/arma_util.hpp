@@ -9,8 +9,8 @@
  * 3-clause BSD license along with mlpack.  If not, see
  * http://www.opensource.org/licenses/BSD-3-Clause for more information.
  */
-#ifndef MLPACK_BINDINGS_PYTHON_CYTHON_ARMA_UTIL_HPP
-#define MLPACK_BINDINGS_PYTHON_CYTHON_ARMA_UTIL_HPP
+#ifndef MLPACK_BINDINGS_GO_GONUM_ARMA_UTIL_HPP
+#define MLPACK_BINDINGS_GO_GONUM_ARMA_UTIL_HPP
 
 // Include Armadillo via mlpack.
 #include "cli.hpp"

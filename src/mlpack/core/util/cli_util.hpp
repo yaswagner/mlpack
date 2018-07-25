@@ -2,7 +2,7 @@
  * @file cli_util.hpp
  * @author Yasmine Dumouchel
  *
- * Simple function to work around C's lack of support for templates.
+ * Simple function to work around C and Go's lack of support for templates.
  *
  * mlpack is free software; you may redistribute it and/or modify it under the
  * terms of the 3-clause BSD license.  You should have received a copy of the

@@ -15,7 +15,7 @@
 
 namespace mlpack {
 namespace bindings {
-namespace python {
+namespace go {
 
 /**
  * Given an input type like, e.g., "LogisticRegression<>", return three types
@@ -49,7 +49,7 @@ inline void StripType(const std::string& inputType,
   }
 }
 
-} // namespace python
+} // namespace go
 } // namespace bindings
 } // namespace mlpack
 

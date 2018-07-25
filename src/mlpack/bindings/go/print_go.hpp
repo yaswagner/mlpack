@@ -17,7 +17,7 @@
 
 namespace mlpack {
 namespace bindings {
-namespace python {
+namespace go {
 
 /**
  * Given a list of parameter definition and program documentation, print a
@@ -25,16 +25,35 @@ namespace python {
  *
  * @param parameters List of parameters the program will use (from CLI).
  * @param programInfo Documentation for the program.
- * @param mainFilename Filename of the main program (i.e.
- *      "/path/to/pca_main.cpp").
  * @param functionName Name of the function (i.e. "pca").
  */
 void PrintCPP(const util::ProgramDoc& programInfo,
-              const std::string& mainFilename,
+              const std::string& functionName);
+
+/**
+ * Given a list of parameter definition and program documentation, print a
+ * generated .h file to stdout.
+ *
+ * @param parameters List of parameters the program will use (from CLI).
+ * @param programInfo Documentation for the program.
+ * @param functionName Name of the function (i.e. "pca").
+ */
+void PrintH(const util::ProgramDoc& programInfo,
+              const std::string& functionName);
+
+/**
+ * Given a list of parameter definition and program documentation, print a
+ * generated .go file to stdout.
+ *
+ * @param parameters List of parameters the program will use (from CLI).
+ * @param programInfo Documentation for the program.
+ * @param functionName Name of the function (i.e. "pca").
+ */
+void PrintGo(const util::ProgramDoc& programInfo,
               const std::string& functionName);
 
 
-} // namespace python
+} // namespace go
 } // namespace bindings
 } // namespace mlpack
 
