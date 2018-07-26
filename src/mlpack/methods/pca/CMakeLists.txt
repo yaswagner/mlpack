@@ -18,8 +18,9 @@ endforeach()
 # the parent scope).
 set(MLPACK_SRCS ${MLPACK_SRCS} ${DIR_SRCS} PARENT_SCOPE)
 
-# add_library(pcalib STATIC pca_main.cpp)
+# add_library(pcalib SHARED pca_main.cpp)
 # target_link_libraries(pcalib ${MLPACK_LIBRARIES})
+
 
 add_cli_executable(pca)
 add_python_binding(pca)

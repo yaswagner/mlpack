@@ -2,18 +2,25 @@
 #include "perceptron.hpp"
 #include "perceptron.h"
 #include "perceptron_main.cpp"
+#include <mlpack/core/util/cli_util.hpp>
 
-namespace mlpack {
+using namespace mlpack;
+using namespace mlpack::perceptron;
+using namespace mlpack::util;
+using namespace std;
+using namespace arma;
 
-void *perceptron_modelPtr()
+
+extern "C" void MLPACK_SetPerceptronModelPtr(const char* identifier, MLPACK_PerceptronModel value)
 {
-  void *ptr = CLI::GetParam<PerceptronModel*>("output_model");
-  return ptr;
+
+  SetParamPtr<PerceptronModel>(identifier, reinterpret_cast<PerceptronModel*>(value), CLI::HasParam("copy_all_inputs"));
 }
 
-extern "C" void *MLPACK_perceptron_modelPtr()
+extern "C" void *MLPACK_GetPerceptronModelPtr(const char* identifier)
 {
-  return perceptron_modelPtr();
+  PerceptronModel *modelptr = GetParamPtr<PerceptronModel>(identifier);
+  return modelptr;
 }
 
 static void perceptron_mlpackMain()
@@ -25,5 +32,3 @@ extern "C" void MLPACK_perceptron()
 {
   perceptron_mlpackMain();
 }
-
-} // namespace mlpack

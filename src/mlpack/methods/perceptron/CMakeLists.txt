@@ -5,8 +5,8 @@ cmake_minimum_required(VERSION 2.8)
 set(SOURCES
   perceptron.hpp
   perceptron_impl.hpp
-  # perceptron.h
-  # perceptron.cpp
+  perceptron.h
+  perceptron.cpp
 )
 
 add_subdirectory(initialization_methods)
@@ -21,6 +21,9 @@ endforeach()
 # the parent scope).
 set(MLPACK_SRCS ${MLPACK_SRCS} ${DIR_SRCS} PARENT_SCOPE)
 
+add_library(perceptronlib perceptron_main.cpp)
+target_link_libraries(perceptronlib mlpack ${MLPACK_LIBRARIES})
+
 add_cli_executable(perceptron)
 add_python_binding(perceptron)
-add_go_binding(perceptron)
+# add_go_binding(perceptron)
