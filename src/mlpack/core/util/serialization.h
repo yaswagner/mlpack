@@ -8,9 +8,9 @@
 extern "C" {
 #endif
 
-extern const char* C_SerializeOut(const char *ptr, const char *name);
+extern const char* MLPACK_SerializeOut(const char *ptr, const char *name);
 
-extern void C_SerializeIn(const char *ptr, const char *str, const char *name);
+extern void MLPACK_SerializeIn(const char *ptr, const char *str, const char *name);
 
 #if defined(__cplusplus) || defined(c_plusplus)
 }

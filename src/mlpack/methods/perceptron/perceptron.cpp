@@ -19,7 +19,7 @@ extern "C" void MLPACK_SetPerceptronModelPtr(const char* identifier, MLPACK_Perc
 extern "C" void *MLPACK_GetPerceptronModelPtr(const char* identifier)
 {
   PerceptronModel *modelptr = GetParamPtr<PerceptronModel>(identifier);
-  cout << modelptr << endl;
+  cout << "Model pointer C++: " << modelptr << endl;
   return modelptr;
 }
 
