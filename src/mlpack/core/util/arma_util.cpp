@@ -9,7 +9,7 @@ namespace util {
 
 extern "C" {
 
-void MLPACK_NewMatrix(const char *identifier, const double mat[], int row, int col)
+void MLPACK_ToArma(const char *identifier, const double mat[], int row, int col)
 {
   // Advanced constructor.
   arma::mat m(const_cast<double*>(mat), row, col, false, true);
@@ -22,9 +22,26 @@ void MLPACK_NewMatrix(const char *identifier, const double mat[], int row, int c
   SetParam(identifier, m);
 }
 
-void *MLPACK_MatrixPtr(const char *identifier){
+void *MLPACK_ArmaPtr(const char *identifier){
   arma::mat output = CLI::GetParam<arma::mat>(identifier);
   std::cout << "\nARMA OUTPUT:" << std::endl;
+  output.print();
+  void *ptr = GetMemory(output);
+  return ptr;
+}
+
+void *MLPACK_ArmaRowPtr(const char *identifier){
+  std::cout << "\nARMA ROW:" << std::endl;
+  arma::Row<size_t> output = CLI::GetParam<arma::Row<size_t>>(identifier);
+  std::cout << "\nARMA ROW OUTPUT:" << std::endl;
+  output.print();
+  void *ptr = GetMemory(output);
+  return ptr;
+}
+
+void *MLPACK_ArmaColPtr(const char *identifier){
+  arma::Col<size_t> output = CLI::GetParam<arma::Col<size_t>>(identifier);
+  std::cout << "\nARMA ROW OUTPUT:" << std::endl;
   output.print();
   void *ptr = GetMemory(output);
   return ptr;
@@ -44,6 +61,18 @@ int MLPACK_NumCols(const char *identifier)
   return output.n_cols;
 }
 
+int MLPACK_RowSize(const char *identifier)
+{
+  arma::Row<size_t> output = CLI::GetParam<arma::Row<size_t>>(identifier);
+  return output.n_rows;
+}
+
+// Return the number of cols.
+int MLPACK_ColSize(const char *identifier)
+{
+  arma::Col<size_t> output = CLI::GetParam<arma::Col<size_t>>(identifier);
+  return output.n_cols;
+}
 // // Return the number of elems.
 int MLPACK_NumElems(const char *identifier)
 {

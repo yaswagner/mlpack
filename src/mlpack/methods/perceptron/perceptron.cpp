@@ -13,13 +13,13 @@ using namespace arma;
 
 extern "C" void MLPACK_SetPerceptronModelPtr(const char* identifier, MLPACK_PerceptronModel value)
 {
-
   SetParamPtr<PerceptronModel>(identifier, reinterpret_cast<PerceptronModel*>(value), CLI::HasParam("copy_all_inputs"));
 }
 
 extern "C" void *MLPACK_GetPerceptronModelPtr(const char* identifier)
 {
   PerceptronModel *modelptr = GetParamPtr<PerceptronModel>(identifier);
+  cout << modelptr << endl;
   return modelptr;
 }
 

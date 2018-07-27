@@ -9,15 +9,21 @@
 extern "C" {
 #endif
 
-extern void MLPACK_NewMatrix(const char *identifier, const double mat[], int row, int col);
+extern void MLPACK_ToArma(const char *identifier, const double mat[], int row, int col);
 
-extern void *MLPACK_MatrixPtr(const char *identifier);
+extern void *MLPACK_ArmaPtr(const char *identifier);
+
+extern void *MLPACK_ArmaRowPtr(const char *identifier);
 
 extern int MLPACK_NumRows(const char *identifier);
 
 extern int MLPACK_NumCols(const char *identifier);
 
 extern int MLPACK_NumElems(const char *identifier);
+
+extern int MLPACK_RowSize(const char *identifier);
+
+extern int MLPACK_ColSize(const char *identifier);
 
 #if defined(__cplusplus) || defined(c_plusplus)
 }

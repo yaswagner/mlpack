@@ -4,8 +4,6 @@
 #include <stdint.h>
 #include <stddef.h>
 
-struct Model;
-
 #if defined(__cplusplus) || defined(c_plusplus)
 extern "C" {
 #endif
