@@ -25,6 +25,8 @@ extern int MLPACK_RowSize(const char *identifier);
 
 extern int MLPACK_ColSize(const char *identifier);
 
+extern int MLPACK_NumElemsRow(const char *identifier);
+
 #if defined(__cplusplus) || defined(c_plusplus)
 }
 #endif

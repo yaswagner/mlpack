@@ -27,21 +27,20 @@ void *MLPACK_ArmaPtr(const char *identifier){
   std::cout << "\nARMA OUTPUT:" << std::endl;
   output.print();
   void *ptr = GetMemory(output);
+  std::cout << ptr << std::endl;
   return ptr;
 }
 
 void *MLPACK_ArmaRowPtr(const char *identifier){
-  std::cout << "\nARMA ROW:" << std::endl;
-  arma::Row<size_t> output = CLI::GetParam<arma::Row<size_t>>(identifier);
+  arma::Row<double> output = arma::conv_to<arma::Row<double>>::from(CLI::GetParam<arma::Row<size_t>>(identifier));
   std::cout << "\nARMA ROW OUTPUT:" << std::endl;
-  output.print();
+  std::cout << output << std::endl;
   void *ptr = GetMemory(output);
   return ptr;
 }
 
 void *MLPACK_ArmaColPtr(const char *identifier){
   arma::Col<size_t> output = CLI::GetParam<arma::Col<size_t>>(identifier);
-  std::cout << "\nARMA ROW OUTPUT:" << std::endl;
   output.print();
   void *ptr = GetMemory(output);
   return ptr;
@@ -73,10 +72,17 @@ int MLPACK_ColSize(const char *identifier)
   arma::Col<size_t> output = CLI::GetParam<arma::Col<size_t>>(identifier);
   return output.n_cols;
 }
-// // Return the number of elems.
+// Return the number of elems.
 int MLPACK_NumElems(const char *identifier)
 {
   arma::mat output = CLI::GetParam<arma::mat>(identifier);
+  return output.n_elem;
+}
+
+// Return the number of elems.
+int MLPACK_NumElemsRow(const char *identifier)
+{
+  arma::Row<size_t> output = CLI::GetParam<arma::Row<size_t>>(identifier);
   return output.n_elem;
 }
 

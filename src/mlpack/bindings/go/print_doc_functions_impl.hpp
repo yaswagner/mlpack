@@ -27,10 +27,10 @@ inline std::string PrintValue(const T& value, bool quotes)
 {
   std::ostringstream oss;
   if (quotes)
-    oss << "'";
+    oss << "\"";
   oss << value;
   if (quotes)
-    oss << "'";
+    oss << "\"";
   return oss.str();
 }
 
