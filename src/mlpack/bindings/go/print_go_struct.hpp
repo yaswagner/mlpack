@@ -9,8 +9,8 @@
  * 3-clause BSD license along with mlpack.  If not, see
  * http://www.opensource.org/licenses/BSD-3-Clause for more information.
  */
-#ifndef MLPACK_BINDINGS_GO_PRINT_CLASS_DEFN_HPP
-#define MLPACK_BINDINGS_GO_PRINT_CLASS_DEFN_HPP
+#ifndef MLPACK_BINDINGS_GO_PRINT_GO_STRUCT_HPP
+#define MLPACK_BINDINGS_GO_PRINT_GO_STRUCT_HPP
 
 #include "strip_type.hpp"
 
@@ -71,22 +71,22 @@ void PrintClassDefnCPP(
    * }
    */
    std::cout << std::endl;
-   std::cout << "extern \"C\" void MLPACK_Set" << printedType
+   std::cout << "extern \"C\" void MLPACK_Set" << strippedType
               << "Ptr(const char* identifier," << std::endl;
-   std::cout << "               MLPACK_" << printedType << "* value)" << std::endl;
+   std::cout << "               MLPACK_" << strippedType << "* value)" << std::endl;
    std::cout << "{" << std::endl;
-   std::cout << "    SetParamPtr<" << printedType
+   std::cout << "    SetParamPtr<" << strippedType
               << ">(identifier," << std::endl;
-   std::cout << "    reinterpret_cast<" << printedType
+   std::cout << "    reinterpret_cast<" << strippedType
               << "*(value)," << std::endl;
    std::cout << "    CLI::HasParam(\"copy_all_inputs\"));" << std::endl;
    std::cout << "}" << std::endl;
    std::cout << std::endl;
-   std::cout << "extern \"C\" void *MLPACK_Get" << printedType
+   std::cout << "extern \"C\" void *MLPACK_Get" << strippedType
               << "Ptr(const char* identifier)" << std::endl;
    std::cout << "{" << std::endl;
-   std::cout << "    " << printedType << "*modelptr = GetParamPtr<"
-              << printedType << ">(identifier);" << printedType
+   std::cout << "    " << strippedType << "*modelptr = GetParamPtr<"
+              << strippedType << ">(identifier);" << strippedType
               << "return modelptr;" << std::endl;
    std::cout << "}" << std::endl;
    std::cout << std::endl;
@@ -157,15 +157,15 @@ void PrintClassDefnH(
    * extern void *MLPACK_GetPerceptronModelPtr(const char* identifier);
    *
    */
-   std::cout << "typedef void *MLPACK_" << printedType
+   std::cout << "typedef void *MLPACK_" << strippedType
               << ";" << std::endl;
    std::cout << std::endl;
-   std::cout << "extern void *MLPACK_Set" << printedType
+   std::cout << "extern void *MLPACK_Set" << strippedType
               << "Ptr(const char* identifier," << std::endl;
-   std::cout << "         MLPACK_" << printedType << "* value);"
+   std::cout << "         MLPACK_" << strippedType << "* value);"
               << std::endl;
    std::cout << std::endl;
-   std::cout << "extern void *MLPACK_Get" << printedType
+   std::cout << "extern void *MLPACK_Get" << strippedType
               << "Ptr(const char* identifier);" << std::endl;
    std::cout << std::endl;
 }
@@ -230,37 +230,37 @@ void PrintClassDefnGo(
    * }
    */
    std::cout << std::endl;
-   std::cout << "func (m *" << printedType
+   std::cout << "func (m *" << strippedType
               << ") alloc(identifier string) {" << std::endl;
-   std::cout << " m.mem = C.MLPACK_Get" << printedType
+   std::cout << " m.mem = C.MLPACK_Get" << strippedType
               << "Ptr(C.CString(identifier))" << std::endl;
    std::cout << " runtime.SetFinalizer(m, free"
-              << printedType << ")" << std::endl;
+              << strippedType << ")" << std::endl;
    std::cout << "}" << std::endl;
    std::cout << std::endl;
    std::cout << std::endl;
-   std::cout << "func free" << printedType
-              << "(m *" << printedType << ") {" << std::endl;
+   std::cout << "func free" << strippedType
+              << "(m *" << strippedType << ") {" << std::endl;
    std::cout << " C.free(unsafe.Pointer(m.mem))" << std::endl;
    std::cout << "}" << std::endl;
    std::cout << std::endl;
-   std::cout << "func (m *" << printedType << ") get"
-              << printedType << "(identifier string) {" << std::endl;
+   std::cout << "func (m *" << strippedType << ") get"
+              << strippedType << "(identifier string) {" << std::endl;
    std::cout << " m.alloc(identifier)" << std::endl;
    std::cout << " time.Sleep(time.Second)" << std::endl;
    std::cout << std::endl;
    std::cout << " modelptr := (*[1<<30-1]float64)(m.mem)" << std::endl;
-   std::cout << " m.model = (C.MLPACK_" << printedType
+   std::cout << " m.model = (C.MLPACK_" << strippedType
               << ")(modelptr)" << std::endl;
    std::cout << std::endl;
    std::cout << " runtime.GC()" << std::endl;
    std::cout << " time.Sleep(time.Second)" << std::endl;
    std::cout << "}" << std::endl;
    std::cout << std::endl;
-   std::cout << "func set" << printedType
+   std::cout << "func set" << strippedType
               << "(identifier string, c *C.MLPACK_"
-              << printedType <<  ") {" << std::endl;
-   std::cout << " C.MLPACK_Set" << printedType
+              << strippedType <<  ") {" << std::endl;
+   std::cout << " C.MLPACK_Set" << strippedType
               << "Ptr(C.CString(identifier), c)" << std::endl;
    std::cout << "}" << std::endl;
    std::cout << std::endl;

@@ -8,9 +8,9 @@
 extern "C" {
 #endif
 
-typedef void *MLPACK_PerceptronModel;
 
-extern void MLPACK_SetPerceptronModelPtr(const char* identifier, MLPACK_PerceptronModel* value);
+extern void MLPACK_SetPerceptronModelPtr(const char* identifier,
+          void *value);
 
 extern void *MLPACK_GetPerceptronModelPtr(const char* identifier);
 

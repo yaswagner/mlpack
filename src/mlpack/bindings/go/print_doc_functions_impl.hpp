@@ -70,10 +70,7 @@ std::string PrintInputOptions(const std::string& paramName,
     {
       // Print the input option.
       std::ostringstream oss;
-      if (paramName != "lambda") // Don't print Python keywords.
-        oss << paramName << "=";
-      else
-        oss << paramName << "_=";
+      oss << paramName << "=";
       oss << PrintValue(value, d.tname == TYPENAME(std::string));
       result = oss.str();
     }
@@ -113,7 +110,7 @@ std::string PrintOutputOptions(const std::string& paramName,
     {
       // Print a new line for the output option.
       std::ostringstream oss;
-      oss << ">>> " << value << " = output['" << paramName << "']";
+      oss << value << ", ";
       result = oss.str();
     }
   }
@@ -142,8 +139,12 @@ template<typename... Args>
 std::string ProgramCall(const std::string& programName, Args... args)
 {
   std::ostringstream oss;
-  oss << ">>> " << programName << "(";
-
+  oss << ">>> " << PrintOutputOptions(args...);
+  if (oss.str() == "")
+    return util::HyphenateString(call, 2);
+  else
+    return util::HyphenateString(call, 2) + "\n" + oss.str();
+  oss <<  programName << "(";
   // Now process each input option.
   oss << PrintInputOptions(args...);
   oss << ")";
@@ -151,12 +152,7 @@ std::string ProgramCall(const std::string& programName, Args... args)
   std::string call = oss.str();
   oss.str(""); // Reset it.
 
-  // Now process each output option.
-  oss << PrintOutputOptions(args...);
-  if (oss.str() == "")
-    return util::HyphenateString(call, 2);
-  else
-    return util::HyphenateString(call, 2) + "\n" + oss.str();
+
 }
 
 /**

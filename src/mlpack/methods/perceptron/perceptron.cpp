@@ -11,15 +11,19 @@ using namespace std;
 using namespace arma;
 
 
-extern "C" void MLPACK_SetPerceptronModelPtr(const char* identifier, MLPACK_PerceptronModel* value)
+
+extern "C" void MLPACK_SetPerceptronModelPtr(const char* identifier,
+              void *value)
 {
-  SetParamPtr<PerceptronModel>(identifier, reinterpret_cast<PerceptronModel*>(value), CLI::HasParam("copy_all_inputs"));
+    SetParamPtr<PerceptronModel>(identifier,
+    static_cast<PerceptronModel*>(value),
+    CLI::HasParam("copy_all_inputs"));
 }
 
 extern "C" void *MLPACK_GetPerceptronModelPtr(const char* identifier)
 {
   PerceptronModel *modelptr = GetParamPtr<PerceptronModel>(identifier);
-  cout << "Model pointer C++: " << modelptr << endl;
+  cout << "\n C++ model: " << modelptr << endl;
   return modelptr;
 }
 

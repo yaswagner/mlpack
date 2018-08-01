@@ -33,8 +33,8 @@ add_custom_command(OUTPUT ${CMAKE_BINARY_DIR}/src/mlpack/bindings/go/generate_cp
 
 add_executable(generate_cpp_${name}
     ${CMAKE_BINARY_DIR}/src/mlpack/bindings/go/generate_cpp_${name}.cpp
-    ${CMAKE_SOURCE_DIR}/src/mlpack/bindings/go/print_go.hpp
-    ${CMAKE_SOURCE_DIR}/src/mlpack/bindings/go/print_go.cpp)
+    ${CMAKE_SOURCE_DIR}/src/mlpack/bindings/go/print_cpp.hpp
+    ${CMAKE_SOURCE_DIR}/src/mlpack/bindings/go/print_cpp.cpp)
 target_link_libraries(generate_cpp_${name} mlpack ${MLPACK_LIBRARIES})
 set_target_properties(generate_cpp_${name} PROPERTIES COMPILE_FLAGS
     -DBINDING_TYPE=BINDING_TYPE_GO)
@@ -64,8 +64,8 @@ add_custom_command(OUTPUT ${CMAKE_BINARY_DIR}/src/mlpack/bindings/go/generate_h_
 
 add_executable(generate_h_${name}
     ${CMAKE_BINARY_DIR}/src/mlpack/bindings/go/generate_h_${name}.cpp
-    ${CMAKE_SOURCE_DIR}/src/mlpack/bindings/go/print_go.hpp
-    ${CMAKE_SOURCE_DIR}/src/mlpack/bindings/go/print_go.cpp)
+    ${CMAKE_SOURCE_DIR}/src/mlpack/bindings/go/print_h.hpp
+    ${CMAKE_SOURCE_DIR}/src/mlpack/bindings/go/print_h.cpp)
 target_link_libraries(generate_h_${name} mlpack ${MLPACK_LIBRARIES})
 set_target_properties(generate_h_${name} PROPERTIES COMPILE_FLAGS
     -DBINDING_TYPE=BINDING_TYPE_GO)

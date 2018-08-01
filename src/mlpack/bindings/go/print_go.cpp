@@ -166,7 +166,6 @@ void PrintH(const util::ProgramDoc& programInfo,
   }
 
   // Finally, we generate the wrapper for mlpackMain()
-  cout << endl;
   cout << "extern void MLPACK_" << functionName << "();" << endl;
   cout << endl;
   cout << "#if defined(__cplusplus) || defined(c_plusplus)" << endl;
@@ -241,6 +240,14 @@ void PrintGo(const util::ProgramDoc& programInfo,
   cout << endl;
 
 
+  // Print Go method configuration struct
+  for (ParamIter it = parameters.begin(); it != parameters.end(); ++it)
+  {
+    const util::ParamData& d = it->second;
+    if (d.input)
+      CLI::GetSingleton().functionMap[d.tname]["PrintConfigStruct"](d, NULL, NULL);
+  }
+
   // // Print any class definitions we need to have.
   // std::set<std::string> classes;
   // for (ParamIter it = parameters.begin(); it != parameters.end(); ++it)
@@ -258,14 +265,14 @@ void PrintGo(const util::ProgramDoc& programInfo,
   // }
   //
   // cout << endl;
-  //
-  // // Print any extra class definitions we might need.
-  // for (ParamIter it = parameters.begin(); it != parameters.end(); ++it)
-  // {
-  //   const util::ParamData& d = it->second;
-  //   if (d.input)
-  //     CLI::GetSingleton().functionMap[d.tname]["PrintClassDefn"](d, NULL, NULL);
-  // }
+
+  // Print any extra class definitions we might need.
+  for (ParamIter it = parameters.begin(); it != parameters.end(); ++it)
+  {
+    const util::ParamData& d = it->second;
+    if (d.input)
+      CLI::GetSingleton().functionMap[d.tname]["PrintClassDefnGo"](d, NULL, NULL);
+  }
 
   // Print the comment describing the function and its parameters.
   cout << "/*" << endl;

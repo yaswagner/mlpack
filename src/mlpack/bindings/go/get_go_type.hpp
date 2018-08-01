@@ -37,7 +37,7 @@ inline std::string GetGoType<int>(
     const typename boost::disable_if<data::HasSerialize<int>>::type*,
     const typename boost::disable_if<arma::is_arma_type<int>>::type*)
 {
-  return "int";
+  return "int32";
 }
 
 template<>
@@ -47,7 +47,7 @@ inline std::string GetGoType<float>(
     const typename boost::disable_if<data::HasSerialize<float>>::type*,
     const typename boost::disable_if<arma::is_arma_type<float>>::type*)
 {
-  return "float";
+  return "float32";
 }
 
 template<>
@@ -57,7 +57,7 @@ inline std::string GetGoType<double>(
     const typename boost::disable_if<data::HasSerialize<double>>::type*,
     const typename boost::disable_if<arma::is_arma_type<double>>::type*)
 {
-  return "double";
+  return "float64";
 }
 
 template<>
@@ -105,9 +105,9 @@ inline std::string GetGoType(
 {
   std::string type = "matrix";
   if (T::is_row)
-    type = "row vector";
+    type = "mat.VecDense";
   else if (T::is_col)
-    type = "column vector";
+    type = "mat.VecDense";
 
   return type;
 }

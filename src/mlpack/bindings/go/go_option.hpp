@@ -85,11 +85,13 @@ class GoOption
     // CLI::GetSingleton().functionMap[data.tname]["GetPrintableParamGo"] =
     //    &GetPrintableParam<T>;
 
-    // These are used by the pyx generator.
+    // These are used by the go binding generator.
     CLI::GetSingleton().functionMap[data.tname]["PrintClassDefnCPP"] =
         &PrintClassDefnCPP<T>;
     CLI::GetSingleton().functionMap[data.tname]["PrintClassDefnH"] =
         &PrintClassDefnH<T>;
+    CLI::GetSingleton().functionMap[data.tname]["PrintClassDefnGo"] =
+        &PrintClassDefnGo<T>;
     //CLI::GetSingleton().functionMap[data.tname]["PrintDefnCPP"] = &PrintDefn<T>;
     CLI::GetSingleton().functionMap[data.tname]["PrintDoc"] = &PrintDoc<T>;
     //CLI::GetSingleton().functionMap[data.tname]["PrintOutputProcessing"] =
