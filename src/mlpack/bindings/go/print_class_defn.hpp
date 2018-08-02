@@ -72,12 +72,12 @@ void PrintClassDefnCPP(
    */
    std::cout << std::endl;
    std::cout << "extern \"C\" void MLPACK_Set" << printedType
-              << "Ptr(const char* identifier," << std::endl;
-   std::cout << "               MLPACK_" << printedType << "* value)" << std::endl;
+              << "Ptr(const char* identifier, " << std::endl;
+   std::cout << "               void* value)" << std::endl;
    std::cout << "{" << std::endl;
    std::cout << "    SetParamPtr<" << printedType
               << ">(identifier," << std::endl;
-   std::cout << "    reinterpret_cast<" << printedType
+   std::cout << "    static_cast<" << printedType
               << "*(value)," << std::endl;
    std::cout << "    CLI::HasParam(\"copy_all_inputs\"));" << std::endl;
    std::cout << "}" << std::endl;
@@ -162,7 +162,7 @@ void PrintClassDefnH(
    std::cout << std::endl;
    std::cout << "extern void *MLPACK_Set" << printedType
               << "Ptr(const char* identifier," << std::endl;
-   std::cout << "         MLPACK_" << printedType << "* value);"
+   std::cout << "         void* value);"
               << std::endl;
    std::cout << std::endl;
    std::cout << "extern void *MLPACK_Get" << printedType

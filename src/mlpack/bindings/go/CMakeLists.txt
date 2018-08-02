@@ -1,15 +1,26 @@
 
 # Nothing in this directory will be compiled into mlpack.
 set(BINDING_SOURCES
+  get_arma_type.hpp
+  get_cython_type.hpp
+  get_numpy_type_char.hpp
+  get_param.hpp
+  get_printable_param.hpp
+  go_option.hpp
   import_decl.hpp
   print_class_defn.hpp
   print_defn.hpp
   print_doc.hpp
   print_doc_functions.hpp
   print_doc_functions_impl.hpp
+  print_input_processing.hpp
+  print_output_processing.hpp
+  print_cpp.hpp
+  print_cpp.cpp
   print_go.hpp
   print_go.cpp
-  go_option.hpp
+  print_h.hpp
+  print_h.cpp
   strip_type.hpp
 )
 

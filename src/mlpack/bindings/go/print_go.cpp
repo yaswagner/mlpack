@@ -240,13 +240,13 @@ void PrintGo(const util::ProgramDoc& programInfo,
   cout << endl;
 
 
-  // Print Go method configuration struct
-  for (ParamIter it = parameters.begin(); it != parameters.end(); ++it)
-  {
-    const util::ParamData& d = it->second;
-    if (d.input)
-      CLI::GetSingleton().functionMap[d.tname]["PrintConfigStruct"](d, NULL, NULL);
-  }
+  // // Print Go method configuration struct
+  // for (ParamIter it = parameters.begin(); it != parameters.end(); ++it)
+  // {
+  //   const util::ParamData& d = it->second;
+  //   if (d.input)
+  //     CLI::GetSingleton().functionMap[d.tname]["PrintConfigStruct"](d, NULL, NULL);
+  // }
 
   // // Print any class definitions we need to have.
   // std::set<std::string> classes;
@@ -308,16 +308,16 @@ void PrintGo(const util::ProgramDoc& programInfo,
 
   // Print the function definition.
   cout << "func " << functionName << "(";
-  // size_t indent = 4 /* 'def ' */ + functionName.size() + 1 /* '(' */;
-  // for (size_t i = 0; i < inputOptions.size(); ++i)
-  // {
-  //   const util::ParamData& d = parameters.at(inputOptions[i]);
-  //
-  //   if (i != 0)
-  //     cout << "," << endl << std::string(indent, ' ');
-  //
-  //   CLI::GetSingleton().functionMap[d.tname]["PrintDefn"](d, NULL, NULL);
-  // }
+  size_t indent = 4 /* 'def ' */ + functionName.size() + 1 /* '(' */;
+  for (size_t i = 0; i < inputOptions.size(); ++i)
+  {
+    const util::ParamData& d = parameters.at(inputOptions[i]);
+
+    if (i != 0)
+      cout << "," << endl << std::string(indent, ' ');
+
+    CLI::GetSingleton().functionMap[d.tname]["PrintDefn"](d, NULL, NULL);
+  }
 
   // Print closing brace for function definition.
   cout << ") {" << endl;
@@ -335,20 +335,20 @@ void PrintGo(const util::ProgramDoc& programInfo,
 
   // Determine whether or not we need to copy parameters.
   cout << "   // Detect if the parameter was passed; set if so." << endl;
-  cout << "  if p.Copy_all_inputs == true {" << endl;
-  cout << "    SetParamBool(\"copy_all_inputs\", p.Copy_all_inputs)" << endl;
+  cout << "  if param.Copy_all_inputs == true {" << endl;
+  cout << "    SetParamBool(\"copy_all_inputs\", param.Copy_all_inputs)" << endl;
   cout << "    SetPassed(\"copy_all_inputs\")" << endl;
   cout << "" << endl;
 
-  // // Do any input processing.
-  // for (size_t i = 0; i < inputOptions.size(); ++i)
-  // {
-  //   const util::ParamData& d = parameters.at(inputOptions[i]);
-  //
-  //   size_t indent = 2;
-  //   CLI::GetSingleton().functionMap[d.tname]["PrintInputProcessing"](d,
-  //       (void*) &indent, NULL);
-  // }
+  // Do any input processing.
+  for (size_t i = 0; i < inputOptions.size(); ++i)
+  {
+    const util::ParamData& d = parameters.at(inputOptions[i]);
+
+    size_t indent = 2;
+    CLI::GetSingleton().functionMap[d.tname]["PrintInputProcessing"](d,
+        (void*) &indent, NULL);
+  }
 
   // Set all output options as passed.
   cout << "  // Mark all output options as passed." << endl;
@@ -383,7 +383,7 @@ void PrintGo(const util::ProgramDoc& programInfo,
   cout << endl;
 
   cout << "  return result" << endl;
-  cout << "" << endl;
+  cout << "}" << endl;
 }
 
 } // namespace go

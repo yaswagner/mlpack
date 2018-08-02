@@ -11,7 +11,6 @@ using namespace std;
 using namespace arma;
 
 
-
 extern "C" void MLPACK_SetPerceptronModelPtr(const char* identifier,
               void *value)
 {

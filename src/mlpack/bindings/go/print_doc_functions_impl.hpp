@@ -139,12 +139,8 @@ template<typename... Args>
 std::string ProgramCall(const std::string& programName, Args... args)
 {
   std::ostringstream oss;
-  oss << ">>> " << PrintOutputOptions(args...);
-  if (oss.str() == "")
-    return util::HyphenateString(call, 2);
-  else
-    return util::HyphenateString(call, 2) + "\n" + oss.str();
-  oss <<  programName << "(";
+  oss << ">>> " << programName << "(";
+
   // Now process each input option.
   oss << PrintInputOptions(args...);
   oss << ")";
@@ -152,6 +148,12 @@ std::string ProgramCall(const std::string& programName, Args... args)
   std::string call = oss.str();
   oss.str(""); // Reset it.
 
+  // Now process each output option.
+  oss << PrintOutputOptions(args...);
+  if (oss.str() == "")
+    return util::HyphenateString(call, 2);
+  else
+    return util::HyphenateString(call, 2) + "\n" + oss.str();
 
 }
 

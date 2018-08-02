@@ -98,7 +98,7 @@ inline bool IgnoreCheck(
     const std::vector<std::pair<std::string, bool>>& constraints,
     const std::string& paramName);
 
-} // namespace python
+} // namespace go
 } // namespace bindings
 } // namespace mlpack
 
