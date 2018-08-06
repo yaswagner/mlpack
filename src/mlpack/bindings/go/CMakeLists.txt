@@ -154,7 +154,6 @@ add_custom_command(TARGET generate_go_${name} POST_BUILD
     COMMAND ${CMAKE_COMMAND}
         -DGENERATE_GO_PROGRAM=${CMAKE_BINARY_DIR}/bin/generate_go_${name}
         -DGO_OUTPUT_FILE=${CMAKE_BINARY_DIR}/src/mlpack/bindings/go/methods/${name}.go
-        -DGO_OUTPUT_FILE=${CMAKE_SOURCE_DIR}/src/mlpack/bindings/go/methods/${name}.go
         -P ${CMAKE_SOURCE_DIR}/CMake/GenerateGo.cmake)
 
 add_custom_target(build_go_${name}

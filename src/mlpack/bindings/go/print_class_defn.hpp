@@ -255,7 +255,7 @@ void PrintClassDefnGo(
               << "(identifier string, ptr *" << printedType << ") {"
               << std::endl;
    std::cout << " C.MLPACK_Set" << printedType
-              << "Ptr(C.CString(identifier), (unsafe.Pointer)(ptr.mem)"
+              << "Ptr(C.CString(identifier), (unsafe.Pointer)(ptr.mem))"
               << std::endl;
    std::cout << "}" << std::endl;
    std::cout << std::endl;

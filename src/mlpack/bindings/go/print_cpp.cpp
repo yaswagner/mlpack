@@ -72,6 +72,10 @@ void PrintCPP(const ProgramDoc& programInfo,
   cout << "#include \"" << functionName << ".hpp\""<< endl;
   cout << "#include \"" << functionName << ".h\""<< endl;
   cout << "#include \"" << functionName << "_main.cpp\""<< endl;
+  cout << "#include <mlpack/methods/" << functionName << "/"
+        << functionName << ".hpp>" <<endl;
+  cout << "#include <mlpack/methods/" << functionName << "/"
+        << functionName << "_main.cpp>" <<endl;
   cout << "#include <mlpack/core/util/cli_util.hpp>" << endl;
   cout << endl;
   cout << "namespace mlpack {" << endl;

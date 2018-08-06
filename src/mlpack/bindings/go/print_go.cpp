@@ -77,7 +77,7 @@ void PrintGo(const util::ProgramDoc& programInfo,
   cout << "#cgo CFLAGS: -I. -g -Wall" << endl;
   cout << "#cgo LDFLAGS: -L/usr/local/lib -lm -L/usr/local/lib/ "
         << "-lmlpack -lmlpack_go_" << functionName << endl;
-  cout << "#include <mlpack/bindings/go/mlpack/" << functionName << ".h>" << endl;
+  cout << "#include <" << functionName << ".h>" << endl;
   cout << " */" << endl;
   cout << "import \"C\" " << endl;
   cout << endl;
@@ -221,7 +221,8 @@ void PrintGo(const util::ProgramDoc& programInfo,
   cout << "  if param.Copy_all_inputs == true {" << endl;
   cout << "    SetParamBool(\"copy_all_inputs\", param.Copy_all_inputs)" << endl;
   cout << "    SetPassed(\"copy_all_inputs\")" << endl;
-  cout << "" << endl;
+  cout << "  }" << endl;
+  cout << endl;
 
   // Do any input processing.
   for (size_t i = 0; i < inputOptions.size(); ++i)
