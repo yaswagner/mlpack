@@ -1,5 +1,5 @@
-#ifndef ARMA__UTIL_H
-#define ARMA__UTIL_H
+#ifndef MLPACK_BINDINGS_GO_MLPACK_ARMA_UTIL_H
+#define MLPACK_BINDINGS_GO_MLPACK_ARMA_UTIL_H
 
 #include <stdint.h>
 #include <stddef.h>

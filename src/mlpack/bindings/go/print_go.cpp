@@ -77,9 +77,7 @@ void PrintGo(const util::ProgramDoc& programInfo,
   cout << "#cgo CFLAGS: -I. -g -Wall" << endl;
   cout << "#cgo LDFLAGS: -L/usr/local/lib -lm -L/usr/local/lib/ "
         << "-lmlpack -lmlpack_go_" << functionName << endl;
-  cout << "#include <mlpack/core/util/cli_util.h>" << endl;
-  cout << "#include <mlpack/core/util/arma_util.h>" << endl;
-  cout << "#include <mlpack/bindings/go/" << functionName << ".h>" << endl;
+  cout << "#include <mlpack/bindings/go/mlpack/" << functionName << ".h>" << endl;
   cout << " */" << endl;
   cout << "import \"C\" " << endl;
   cout << endl;

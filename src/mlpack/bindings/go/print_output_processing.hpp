@@ -1,8 +1,8 @@
 /**
  * @file print_output_processing.hpp
- * @author Ryan Curtin
+ * @author Yasmine Dumouchel
  *
- * Print the output processing in a Python binding .pyx file for a given
+ * Print the output processing in a Go binding .go file for a given
  * parameter.
  *
  * mlpack is free software; you may redistribute it and/or modify it under the

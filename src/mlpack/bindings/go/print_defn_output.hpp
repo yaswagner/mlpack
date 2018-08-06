@@ -1,8 +1,8 @@
 /**
- * @file print_output_processing.hpp
- * @author Ryan Curtin
+ * @file print_defn_output.hpp
+ * @author Yasmine Dumouchel
  *
- * Print the output processing in a Python binding .pyx file for a given
+ * Print the output for the definition in a Python binding .go file for a given
  * parameter.
  *
  * mlpack is free software; you may redistribute it and/or modify it under the
@@ -22,7 +22,7 @@ namespace bindings {
 namespace go {
 
 /**
- * Print output processing for a regular parameter type.
+ * Print output for a regular parameter type.
  */
 template<typename T>
 void PrintDefnOutput(
@@ -36,7 +36,7 @@ void PrintDefnOutput(
 }
 
 /**
- * Print output processing for a matrix type.
+ * Print output for a matrix type.
  */
 template<typename T>
 void PrintDefnOutput(
@@ -60,7 +60,7 @@ void PrintDefnOutput(
 // }
 
 /**
- * Print output processing for a serializable model.
+ * Print output for a serializable model.
  */
 template<typename T>
 void PrintDefnOutput(

@@ -2,8 +2,8 @@
  * @file print_go.hpp
  * @author Yasmine Dumouchel
  *
- * Given a list of ParamData structures, emit a .pyx file defining the Cython
- * binding.
+ * Given a list of ParamData structures, emit a .h file defining the 
+ * Go bindings.
  *
  * mlpack is free software; you may redistribute it and/or modify it under the
  * terms of the 3-clause BSD license.  You should have received a copy of the

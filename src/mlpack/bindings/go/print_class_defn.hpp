@@ -1,8 +1,9 @@
 /**
  * @file print_class_defn.hpp
- * @author Ryan Curtin
+ * @author Yasmine Dumouchel
  *
- * Print the class definition for generating a .pyx binding.
+ * Print the class definition and association functions
+ * for generating a .go binding.
  *
  * mlpack is free software; you may redistribute it and/or modify it under the
  * terms of the 3-clause BSD license.  You should have received a copy of the

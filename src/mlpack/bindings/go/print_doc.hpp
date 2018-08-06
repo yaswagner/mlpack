@@ -1,8 +1,8 @@
 /**
  * @file print_doc.hpp
- * @author Ryan Curtin
+ * @author Yasmine Dumouchel
  *
- * Print documentation (as part of a docstring) for a Python binding parameter.
+ * Print documentation for a Go binding parameter.
  *
  * mlpack is free software; you may redistribute it and/or modify it under the
  * terms of the 3-clause BSD license.  You should have received a copy of the

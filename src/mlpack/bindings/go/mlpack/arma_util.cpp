@@ -1,7 +1,7 @@
 #include "arma_util.h"
 #include "arma_util.hpp"
-#include "cli.hpp"
 #include "cli_util.hpp"
+#include <mlpack/core/util/cli.hpp>
 
 namespace mlpack {
 
@@ -14,18 +14,12 @@ void MLPACK_ToArma(const char *identifier, const double mat[], int row, int col)
   // Advanced constructor.
   arma::mat m(const_cast<double*>(mat), row, col, false, true);
 
-  // Check if arma matrix is equivalent to Go's.
-  std::cout << "\nARMA INPUT:" << std::endl;
-  m.print();
-
   // Set input parameter with corresponding matrix in CLI.
   SetParam(identifier, m);
 }
 
 void *MLPACK_ArmaPtr(const char *identifier){
   arma::mat output = CLI::GetParam<arma::mat>(identifier);
-  std::cout << "\nARMA OUTPUT:" << std::endl;
-  output.print();
   void *ptr = GetMemory(output);
   std::cout << ptr << std::endl;
   return ptr;
@@ -33,15 +27,12 @@ void *MLPACK_ArmaPtr(const char *identifier){
 
 void *MLPACK_ArmaRowPtr(const char *identifier){
   arma::Row<double> output = arma::conv_to<arma::Row<double>>::from(CLI::GetParam<arma::Row<size_t>>(identifier));
-  std::cout << "\nARMA ROW OUTPUT:" << std::endl;
-  std::cout << output << std::endl;
   void *ptr = GetMemory(output);
   return ptr;
 }
 
 void *MLPACK_ArmaColPtr(const char *identifier){
   arma::Col<size_t> output = CLI::GetParam<arma::Col<size_t>>(identifier);
-  output.print();
   void *ptr = GetMemory(output);
   return ptr;
 }
@@ -87,7 +78,6 @@ int MLPACK_NumElemsRow(const char *identifier)
 }
 
 } // extern "C"
-
 
 } // namespace util
 

@@ -9,8 +9,8 @@
  * 3-clause BSD license along with mlpack.  If not, see
  * http://www.opensource.org/licenses/BSD-3-Clause for more information.
  */
-#ifndef MLPACK_BINDINGS_PYTHON_MLPACK_SERIALIZATION_HPP
-#define MLPACK_BINDINGS_PYTHON_MLPACK_SERIALIZATION_HPP
+#ifndef MLPACK_BINDINGS_GO_MLPACK_SERIALIZATION_UTIL_HPP
+#define MLPACK_BINDINGS_GO_MLPACK_SERIALIZATION_UTIL_HPP
 
 #include <mlpack/core.hpp>
 

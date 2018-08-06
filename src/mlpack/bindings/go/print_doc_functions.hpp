@@ -1,6 +1,6 @@
 /**
  * @file print_doc_functions.hpp
- * @author Ryan Curtin
+ * @author 
  *
  * This file contains functions useful for printing documentation strings
  * related to Python bindings.

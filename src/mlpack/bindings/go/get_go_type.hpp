@@ -1,9 +1,9 @@
 /**
- * @file get_python_type.hpp
- * @author Ryan Curtin
+ * @file get_go_type.hpp
+ * @author Yasmine Dumouchel
  *
- * Template metaprogramming to return the string representation of the Python
- * type for a given Python binding parameter.
+ * Template metaprogramming to return the string representation of the Go
+ * type for a given Go binding parameter.
  *
  * mlpack is free software; you may redistribute it and/or modify it under the
  * terms of the 3-clause BSD license.  You should have received a copy of the

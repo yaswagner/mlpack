@@ -4,17 +4,11 @@ set(SOURCES
   arma_traits.hpp
   arma_config.hpp
   arma_config_check.hpp
-  arma_util.h
-  arma_util.hpp
-  arma_util.cpp
   backtrace.hpp
   backtrace.cpp
   cli.hpp
   cli.cpp
   cli_impl.hpp
-  cli_util.cpp
-  cli_util.hpp
-  cli_util.h
   deprecated.hpp
   hyphenate_string.hpp
   is_std_vector.hpp

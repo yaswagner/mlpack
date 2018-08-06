@@ -1,8 +1,8 @@
 /**
- * @file print_input_processing.hpp
- * @author Ryan Curtin
+ * @file print_method_init.hpp
+ * @author Yasmine Dumouchel
  *
- * Print input processing for a Python binding option.
+ * Print method initiation function for a Go Binding
  *
  * mlpack is free software; you may redistribute it and/or modify it under the
  * terms of the 3-clause BSD license.  You should have received a copy of the
@@ -21,7 +21,7 @@ namespace bindings {
 namespace go {
 
 /**
- * Print input processing for a standard option type.
+ * Print parameter with it default value for a standard option type.
  */
 template<typename T>
 void PrintMethodInit(
@@ -38,7 +38,6 @@ void PrintMethodInit(
   if (std::is_same<T, bool>::value)
     def = "false";
 
-    // Make sure that we don't use names that are Python keywords.
     std::string name = d.name;
     std::string goParamName = name;
     if (!name.empty())
@@ -80,7 +79,7 @@ void PrintMethodInit(
 }
 
 /**
- * Print input processing for a matrix type.
+ * Print parameter with it default value for a matrix type.
  */
 template<typename T>
 void PrintMethodInit(
@@ -114,7 +113,7 @@ void PrintMethodInit(
 }
 
 /**
- * Print input processing for a serializable type.
+ * Print parameter with it default valuefor a serializable type.
  */
 template<typename T>
 void PrintMethodInit(

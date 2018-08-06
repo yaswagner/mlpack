@@ -1,6 +1,6 @@
 /**
  * @file go_option.hpp
- * @author Ryan Curtin
+ * @author Yasmine Dumouchel
  *
  * The Go option type.
  *
@@ -39,7 +39,7 @@ class GoOption
 {
  public:
   /**
-   * Construct a PyOption object.  When constructed, it will register itself
+   * Construct a GoOption object.  When constructed, it will register itself
    * with CLI. The testName parameter is not used and added for compatibility
    * reasons.
    */
@@ -80,9 +80,10 @@ class GoOption
       CLI::RestoreSettings(programName, false);
 
     // Set the function pointers that we'll need.  All of these function
-    // pointers will be used by both the program that generates the pyx, and
-    // also the binding itself.  (The binding itself will only use GetParam,
-    // GetPrintableParam, and GetRawParam.)
+    // pointers will be used by both the program that generates the .cpp,
+    // the .h, and the .go binding files also the binding itself.
+    // (The binding itself will only use GetParam, GetPrintableParam,
+    // and GetRawParam.)
     CLI::GetSingleton().functionMap[data.tname]["GetParam"] = &GetParam<T>;
     CLI::GetSingleton().functionMap[data.tname]["GetPrintableParam"] =
         &GetPrintableParam<T>;

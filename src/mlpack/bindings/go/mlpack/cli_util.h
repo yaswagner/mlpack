@@ -1,5 +1,5 @@
-#ifndef MLPACK_BINDINGS_GO_CLI_UTIL_H
-#define MLPACK_BINDINGS_GO_CLI_UTIL_H
+#ifndef MLPACK_BINDINGS_GO_MLPACK_CLI_UTIL_H
+#define MLPACK_BINDINGS_GO_MLPACK_CLI_UTIL_H
 
 #include <stdint.h>
 #include <stddef.h>

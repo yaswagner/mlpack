@@ -1,21 +1,6 @@
-#include "cli.hpp"
-#include "cli_impl.hpp"
 #include "cli_util.h"
 #include "cli_util.hpp"
-#include <list>
-#include <iostream>
-#include <map>
-#include <string>
-
-#include <boost/any.hpp>
-
-#include <mlpack/prereqs.hpp>
-
-#include "timers.hpp"
-#include "program_doc.hpp"
-#include "version.hpp"
-
-#include "param_data.hpp"
+#include <mlpack/core/util/cli.hpp>
 
 namespace mlpack {
 
