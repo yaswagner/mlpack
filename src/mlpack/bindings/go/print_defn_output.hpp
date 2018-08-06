@@ -10,11 +10,11 @@
  * 3-clause BSD license along with mlpack.  If not, see
  * http://www.opensource.org/licenses/BSD-3-Clause for more information.
  */
-#ifndef MLPACK_BINDINGS_GO_PRINT_OUTPUT_PROCESSING_HPP
-#define MLPACK_BINDINGS_GO_PRINT_OUTPUT_PROCESSING_HPP
+#ifndef MLPACK_BINDINGS_GO_PRINT_DEFN_OUTPUT_HPP
+#define MLPACK_BINDINGS_GO_PRINT_DEFN_OUTPUT_HPP
 
 #include <mlpack/prereqs.hpp>
-#include "get_type.hpp"
+#include "get_go_type.hpp"
 #include "strip_type.hpp"
 
 namespace mlpack {
@@ -25,58 +25,25 @@ namespace go {
  * Print output processing for a regular parameter type.
  */
 template<typename T>
-void PrintOutputProcessing(
+void PrintDefnOutput(
     const util::ParamData& d,
-    const size_t indent,
     const typename boost::disable_if<arma::is_arma_type<T>>::type* = 0,
     const typename boost::disable_if<data::HasSerialize<T>>::type* = 0,
     const typename boost::disable_if<std::is_same<T,
         std::tuple<data::DatasetInfo, arma::mat>>>::type* = 0)
 {
-  const std::string prefix(indent, ' ');
-
-
-  /**
-   * This gives us code like:
-   *
-   *
-   */
-  std::cout << prefix << "var" << d.name << std::endl;
-  std::cout << d.name << " := GetParam" << GetType<T>(d)
-      << "(\"" << d.name << "\")" << std::endl;
-  if (GetType<T>(d) == "string")
-  {
-    std::cout << std::endl << prefix << "result = result.decode(\"UTF-8\")";
-  }
-  else if (GetType<T>(d) == "vector[string]")
-  {
-    std::cout << std::endl << prefix
-        << "result = [x.decode(\"UTF-8\") for x in result]";
-  }
+  std::cout << GetGoType<T>(d);
 }
 
 /**
  * Print output processing for a matrix type.
  */
 template<typename T>
-void PrintOutputProcessing(
+void PrintDefnOutput(
     const util::ParamData& d,
-    const size_t indent,
     const typename boost::enable_if<arma::is_arma_type<T>>::type* = 0)
 {
-  const std::string prefix(indent, ' ');
-
-  /**
-   * This gives us code like:
-   *
-   *
-   * where X indicates the type to convert to.
-   */
-   std::cout << prefix << "var " << d.name << "Ptr MLPACK_Arma"
-              << std::endl;
-   std::cout << prefix << d.name << " := " << d.name
-              << "Ptr.ArmaToGonum" << GetType<T>(d)
-              << "(\""  << d.name << "\")" << std::endl;
+  std::cout << "*" << GetGoType<T>(d);
 }
 
 // /**
@@ -96,9 +63,8 @@ void PrintOutputProcessing(
  * Print output processing for a serializable model.
  */
 template<typename T>
-void PrintOutputProcessing(
+void PrintDefnOutput(
     const util::ParamData& d,
-    const size_t indent,
     const typename boost::disable_if<arma::is_arma_type<T>>::type* = 0,
     const typename boost::enable_if<data::HasSerialize<T>>::type* = 0)
 {
@@ -106,18 +72,7 @@ void PrintOutputProcessing(
   std::string strippedType, printedType, defaultsType;
   StripType(d.cppType, strippedType, printedType, defaultsType);
 
-  const std::string prefix(indent, ' ');
-
-  /**
-   * This gives us code like:
-   *
-   */
-   std::cout << prefix << "var " << d.name << " "
-      << printedType << std::endl;
-   std::cout << prefix << d.name << ".get" << printedType
-      << "(\"" << d.name << "\")" << std::endl;
-   std::cout << std::endl;
-
+  std::cout << "*" << printedType;
 }
 
 /**
@@ -135,13 +90,12 @@ void PrintOutputProcessing(
  * @param output Unused parameter.
  */
 template<typename T>
-void PrintOutputProcessing(const util::ParamData& d,
-                           const void* /*input*/,
+void PrintDefnOutput(const util::ParamData& d,
+                           const void* /* input */,
                            void* /* output */)
 {
 
-  PrintOutputProcessing<typename std::remove_pointer<T>::type>(d,
-      2);
+  PrintDefnOutput<typename std::remove_pointer<T>::type>(d);
 
 }
 

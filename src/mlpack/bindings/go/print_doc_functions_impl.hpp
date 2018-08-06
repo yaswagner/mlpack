@@ -39,14 +39,63 @@ template<>
 inline std::string PrintValue(const bool& value, bool quotes)
 {
   if (quotes && value)
-    return "'True'";
+    return "\"true\"";
   else if (quotes && !value)
-    return "'False'";
+    return "\"false\"";
   else if (!quotes && value)
-    return "True";
+    return "true";
   else
-    return "False";
+    return "false";
 }
+
+// // Recursion base case.
+// std::string PrintOptionalInputs() { return ""; }
+//
+// /**
+//  * Print an input option.  This will throw an exception if the parameter does
+//  * not exist in CLI.  For a parameter 'x' with value '5', this will print
+//  * something like x=5.
+//  */
+// template<typename T, typename... Args>
+// std::string PrintOptionalInputs(const std::string& paramName,
+//                               const T& value,
+//                               Args... args)
+// {
+//   // See if this is part of the program.
+//   std::string result = "";
+//
+//   std::string goParamName = paramName;
+//   goParamName[0] = std::toupper(goParamName[0]);
+//
+//   if (CLI::Parameters().count(paramName) > 0)
+//   {
+//     const util::ParamData& d = CLI::Parameters()[paramName];
+//     if (d.input && !d.required)
+//     {
+//       // Print the input option.
+//       std::ostringstream oss;
+//       oss << "param." << goParamName << " = "
+//         << PrintValue(value, d.tname == TYPENAME(std::string));
+//       result = oss.str();
+//     }
+//   }
+//   else
+//   {
+//     // Unknown parameter!
+//     throw std::runtime_error("Unknown parameter '" + paramName + "' " +
+//         "encountered while assembling documentation!  Check PROGRAM_INFO() " +
+//         "declaration.");
+//   }
+//
+//   // Continue recursion.
+//   std::string rest = PrintOptionalInputs(args...);
+//   if (rest != "" && result != "")
+//     result += ", " + rest;
+//   else if (result == "")
+//     result = rest;
+//
+//   return result;
+// }
 
 // Recursion base case.
 std::string PrintInputOptions() { return ""; }
@@ -63,14 +112,14 @@ std::string PrintInputOptions(const std::string& paramName,
 {
   // See if this is part of the program.
   std::string result = "";
+
   if (CLI::Parameters().count(paramName) > 0)
   {
     const util::ParamData& d = CLI::Parameters()[paramName];
-    if (d.input)
+    if (d.input && d.required)
     {
       // Print the input option.
       std::ostringstream oss;
-      oss << paramName << "=";
       oss << PrintValue(value, d.tname == TYPENAME(std::string));
       result = oss.str();
     }
@@ -110,7 +159,7 @@ std::string PrintOutputOptions(const std::string& paramName,
     {
       // Print a new line for the output option.
       std::ostringstream oss;
-      oss << value << ", ";
+      oss << value;
       result = oss.str();
     }
   }
@@ -125,7 +174,7 @@ std::string PrintOutputOptions(const std::string& paramName,
   // Continue recursion.
   std::string rest = PrintOutputOptions(args...);
   if (rest != "" && result != "")
-    result += '\n';
+    result += ", ";
   result += rest;
 
   return result;
@@ -138,6 +187,18 @@ std::string PrintOutputOptions(const std::string& paramName,
 template<typename... Args>
 std::string ProgramCall(const std::string& programName, Args... args)
 {
+  // std::string goProgramName = programName;
+  // goProgramName[0] = std::toupper(goProgramName[0]);
+  //
+  // std::ostringstream oss;
+  // oss << ">>> param := mlpack.Init" << goProgramName << "()";
+  // oss << ">>> ";
+  // oss << ">>> " << PrintOutputOptions(args...) << " = " << goProgramName << "(";
+  // oss << ")";
+  //
+  // std::string call = oss.str();
+  // oss.str(""); // Reset it.
+
   std::ostringstream oss;
   oss << ">>> " << programName << "(";
 
@@ -162,7 +223,7 @@ std::string ProgramCall(const std::string& programName, Args... args)
  */
 inline std::string PrintModel(const std::string& modelName)
 {
-  return "'" + modelName + "'";
+  return "" + modelName + "";
 }
 
 /**
@@ -171,7 +232,7 @@ inline std::string PrintModel(const std::string& modelName)
  */
 inline std::string PrintDataset(const std::string& datasetName)
 {
-  return "'" + datasetName + "'";
+  return "" + datasetName + "";
 }
 
 /**
@@ -200,10 +261,7 @@ inline std::string ParamString(const std::string& paramName)
   // For a Go binding we don't need to know the type.
 
   // Make sure that we don't print reserved keywords.
-  if (paramName == "lambda")
-    return "'" + paramName + "_'";
-  else
-    return "'" + paramName + "'";
+    return "\"" + paramName + "\"";
 }
 
 /**
@@ -214,9 +272,6 @@ template<typename T>
 inline std::string ParamString(const std::string& paramName, const T& value)
 {
   std::ostringstream oss;
-  if (paramName == "lambda") // Don't print reserved keywords.
-    oss << paramName << "_=" << value;
-  else
     oss << paramName << "=" << value;
   return oss.str();
 }

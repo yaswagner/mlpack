@@ -103,7 +103,7 @@ inline std::string GetGoType(
     const util::ParamData& /* d */,
     const typename boost::enable_if<arma::is_arma_type<T>>::type* = 0)
 {
-  std::string type = "matrix";
+  std::string type = "mat.Dense";
   if (T::is_row)
     type = "mat.VecDense";
   else if (T::is_col)
@@ -118,7 +118,7 @@ inline std::string GetGoType(
     const typename boost::disable_if<arma::is_arma_type<T>>::type* = 0,
     const typename boost::enable_if<data::HasSerialize<T>>::type* = 0)
 {
-  return d.cppType + "Type";
+  return d.cppType;
 }
 
 } // namespace go

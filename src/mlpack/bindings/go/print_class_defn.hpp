@@ -70,24 +70,23 @@ void PrintClassDefnCPP(
    *   return modelptr;
    * }
    */
-   std::cout << std::endl;
    std::cout << "extern \"C\" void MLPACK_Set" << printedType
               << "Ptr(const char* identifier, " << std::endl;
    std::cout << "               void* value)" << std::endl;
    std::cout << "{" << std::endl;
    std::cout << "    SetParamPtr<" << printedType
               << ">(identifier," << std::endl;
-   std::cout << "    static_cast<" << printedType
-              << "*(value)," << std::endl;
-   std::cout << "    CLI::HasParam(\"copy_all_inputs\"));" << std::endl;
+   std::cout << "       static_cast<" << printedType
+              << "*>(value)," << std::endl;
+   std::cout << "       CLI::HasParam(\"copy_all_inputs\"));" << std::endl;
    std::cout << "}" << std::endl;
    std::cout << std::endl;
    std::cout << "extern \"C\" void *MLPACK_Get" << printedType
               << "Ptr(const char* identifier)" << std::endl;
    std::cout << "{" << std::endl;
-   std::cout << "    " << printedType << "*modelptr = GetParamPtr<"
-              << printedType << ">(identifier);" << printedType
-              << "return modelptr;" << std::endl;
+   std::cout << "    " << printedType << " *modelptr = GetParamPtr<"
+              << printedType << ">(identifier);" << std::endl;
+   std::cout << "    " << "return modelptr;" << std::endl;
    std::cout << "}" << std::endl;
    std::cout << std::endl;
 }
@@ -149,17 +148,12 @@ void PrintClassDefnH(
 
   /**
    * This will produce code like:
-   * typedef void *MLPACK_PerceptronModel;
+   * extern void MLPACK_SetTypePtr(const char* identifier,
+   *         MLPACK_Type* value);
    *
-   * extern void MLPACK_SetPerceptronModelPtr(const char* identifier,
-   *         MLPACK_PerceptronModel* value);
-   *
-   * extern void *MLPACK_GetPerceptronModelPtr(const char* identifier);
+   * extern void *MLPACK_GetTypePtr(const char* identifier);
    *
    */
-   std::cout << "typedef void *MLPACK_" << printedType
-              << ";" << std::endl;
-   std::cout << std::endl;
    std::cout << "extern void *MLPACK_Set" << printedType
               << "Ptr(const char* identifier," << std::endl;
    std::cout << "         void* value);"
@@ -229,9 +223,13 @@ void PrintClassDefnGo(
    *
    * }
    */
+   std::cout << "type " << printedType << " struct {" << std::endl;
+   std::cout << " mem unsafe.Pointer" << std::endl;
+   std::cout << "}" << std::endl;
    std::cout << std::endl;
-   std::cout << "func (m *" << printedType
-              << ") alloc(identifier string) {" << std::endl;
+   std::cout << "func (m *" << printedType << ") alloc"
+              << printedType << "(identifier string) {"
+              << std::endl;
    std::cout << " m.mem = C.MLPACK_Get" << printedType
               << "Ptr(C.CString(identifier))" << std::endl;
    std::cout << " runtime.SetFinalizer(m, free"
@@ -246,22 +244,18 @@ void PrintClassDefnGo(
    std::cout << std::endl;
    std::cout << "func (m *" << printedType << ") get"
               << printedType << "(identifier string) {" << std::endl;
-   std::cout << " m.alloc(identifier)" << std::endl;
+   std::cout << " m.alloc" << printedType << "(identifier)" << std::endl;
    std::cout << " time.Sleep(time.Second)" << std::endl;
-   std::cout << std::endl;
-   std::cout << " modelptr := (*[1<<30-1]float64)(m.mem)" << std::endl;
-   std::cout << " m.model = (C.MLPACK_" << printedType
-              << ")(modelptr)" << std::endl;
-   std::cout << std::endl;
    std::cout << " runtime.GC()" << std::endl;
    std::cout << " time.Sleep(time.Second)" << std::endl;
    std::cout << "}" << std::endl;
    std::cout << std::endl;
    std::cout << "func set" << printedType
-              << "(identifier string, c *C.MLPACK_"
-              << printedType <<  ") {" << std::endl;
+              << "(identifier string, ptr *" << printedType << ") {"
+              << std::endl;
    std::cout << " C.MLPACK_Set" << printedType
-              << "Ptr(C.CString(identifier), c)" << std::endl;
+              << "Ptr(C.CString(identifier), (unsafe.Pointer)(ptr.mem)"
+              << std::endl;
    std::cout << "}" << std::endl;
    std::cout << std::endl;
 }

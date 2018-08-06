@@ -10,8 +10,8 @@
  * 3-clause BSD license along with mlpack.  If not, see
  * http://www.opensource.org/licenses/BSD-3-Clause for more information.
  */
-#ifndef MLPACK_BINDINGS_GO_GET_CYTHON_TYPE_HPP
-#define MLPACK_BINDINGS_GO_GET_CYTHON_TYPE_HPP
+#ifndef MLPACK_BINDINGS_GO_GET_TYPE_HPP
+#define MLPACK_BINDINGS_GO_GET_TYPE_HPP
 
 #include <mlpack/prereqs.hpp>
 #include <mlpack/core/util/is_std_vector.hpp>
@@ -21,7 +21,7 @@ namespace bindings {
 namespace go {
 
 template<typename T>
-inline std::string GetCythonType(
+inline std::string GetType(
     const util::ParamData& /* d */,
     const typename boost::disable_if<util::IsStdVector<T>>::type* = 0,
     const typename boost::disable_if<data::HasSerialize<T>>::type* = 0,
@@ -31,7 +31,7 @@ inline std::string GetCythonType(
 }
 
 template<>
-inline std::string GetCythonType<int>(
+inline std::string GetType<int>(
     const util::ParamData& /* d */,
     const typename boost::disable_if<util::IsStdVector<int>>::type*,
     const typename boost::disable_if<data::HasSerialize<int>>::type*,
@@ -41,7 +41,7 @@ inline std::string GetCythonType<int>(
 }
 
 template<>
-inline std::string GetCythonType<float>(
+inline std::string GetType<float>(
     const util::ParamData& /* d */,
     const typename boost::disable_if<util::IsStdVector<float>>::type*,
     const typename boost::disable_if<data::HasSerialize<float>>::type*,
@@ -51,7 +51,7 @@ inline std::string GetCythonType<float>(
 }
 
 template<>
-inline std::string GetCythonType<double>(
+inline std::string GetType<double>(
     const util::ParamData& /* d */,
     const typename boost::disable_if<util::IsStdVector<double>>::type*,
     const typename boost::disable_if<data::HasSerialize<double>>::type*,
@@ -61,7 +61,7 @@ inline std::string GetCythonType<double>(
 }
 
 template<>
-inline std::string GetCythonType<std::string>(
+inline std::string GetType<std::string>(
     const util::ParamData& /* d */,
     const typename boost::disable_if<util::IsStdVector<std::string>>::type*,
     const typename boost::disable_if<data::HasSerialize<std::string>>::type*,
@@ -71,7 +71,7 @@ inline std::string GetCythonType<std::string>(
 }
 
 template<>
-inline std::string GetCythonType<size_t>(
+inline std::string GetType<size_t>(
     const util::ParamData& /* d */,
     const typename boost::disable_if<util::IsStdVector<size_t>>::type*,
     const typename boost::disable_if<data::HasSerialize<size_t>>::type*,
@@ -81,7 +81,7 @@ inline std::string GetCythonType<size_t>(
 }
 
 template<>
-inline std::string GetCythonType<bool>(
+inline std::string GetType<bool>(
     const util::ParamData& /* d */,
     const typename boost::disable_if<util::IsStdVector<bool>>::type*,
     const typename boost::disable_if<data::HasSerialize<bool>>::type*,
@@ -91,16 +91,16 @@ inline std::string GetCythonType<bool>(
 }
 
 template<typename T>
-inline std::string GetCythonType(
+inline std::string GetType(
     const util::ParamData& d,
     const typename boost::enable_if<util::IsStdVector<T>>::type* = 0)
 {
-  return "Vec" + GetCythonType<typename T::value_type>(d) + "]";
+  return "Vec" + GetType<typename T::value_type>(d) + "]";
 }
 
 template<typename T>
-inline std::string GetCythonType(
-    const util::ParamData& d,
+inline std::string GetType(
+    const util::ParamData& /* d */,
     const typename boost::enable_if<arma::is_arma_type<T>>::type* = 0)
 {
   std::string type = "Mat";
@@ -109,11 +109,11 @@ inline std::string GetCythonType(
   else if (T::is_col)
     type = "Col";
 
-  return "arma." + type + "[" + GetCythonType<typename T::elem_type>(d) + "]";
+  return type;
 }
 
 template<typename T>
-inline std::string GetCythonType(
+inline std::string GetType(
     const util::ParamData& d,
     const typename boost::disable_if<arma::is_arma_type<T>>::type* = 0,
     const typename boost::enable_if<data::HasSerialize<T>>::type* = 0)

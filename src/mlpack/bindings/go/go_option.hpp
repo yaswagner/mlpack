@@ -16,11 +16,13 @@
 #include "get_param.hpp"
 #include "get_printable_param.hpp"
 #include "print_class_defn.hpp"
-#include "print_defn.hpp"
+#include "print_defn_input.hpp"
+#include "print_defn_output.hpp"
 #include "print_doc.hpp"
 #include "print_input_processing.hpp"
-// #include "print_output_processing.hpp"
-#include "import_decl.hpp"
+#include "print_method_config.hpp"
+#include "print_method_init.hpp"
+#include "print_output_processing.hpp"
 
 namespace mlpack {
 namespace bindings {
@@ -77,13 +79,13 @@ class GoOption
     if (identifier != "verbose" && identifier != "copy_all_inputs")
       CLI::RestoreSettings(programName, false);
 
-      // Set the function pointers that we'll need.  All of these function
-      // pointers will be used by both the program that generates the pyx, and
-      // also the binding itself.  (The binding itself will only use GetParam,
-      // GetPrintableParam, and GetRawParam.)
-      CLI::GetSingleton().functionMap[data.tname]["GetParam"] = &GetParam<T>;
-      CLI::GetSingleton().functionMap[data.tname]["GetPrintableParam"] =
-          &GetPrintableParam<T>;
+    // Set the function pointers that we'll need.  All of these function
+    // pointers will be used by both the program that generates the pyx, and
+    // also the binding itself.  (The binding itself will only use GetParam,
+    // GetPrintableParam, and GetRawParam.)
+    CLI::GetSingleton().functionMap[data.tname]["GetParam"] = &GetParam<T>;
+    CLI::GetSingleton().functionMap[data.tname]["GetPrintableParam"] =
+        &GetPrintableParam<T>;
 
     // These are used by the go binding generator.
     CLI::GetSingleton().functionMap[data.tname]["PrintClassDefnCPP"] =
@@ -92,13 +94,19 @@ class GoOption
         &PrintClassDefnH<T>;
     CLI::GetSingleton().functionMap[data.tname]["PrintClassDefnGo"] =
         &PrintClassDefnGo<T>;
-    CLI::GetSingleton().functionMap[data.tname]["PrintDefn"] = &PrintDefn<T>;
+    CLI::GetSingleton().functionMap[data.tname]["PrintDefnInput"] =
+        &PrintDefnInput<T>;
+    CLI::GetSingleton().functionMap[data.tname]["PrintDefnOutput"] =
+        &PrintDefnOutput<T>;
     CLI::GetSingleton().functionMap[data.tname]["PrintDoc"] = &PrintDoc<T>;
-    //CLI::GetSingleton().functionMap[data.tname]["PrintOutputProcessing"] =
-    //    &PrintOutputProcessing<T>;
+    CLI::GetSingleton().functionMap[data.tname]["PrintOutputProcessing"] =
+        &PrintOutputProcessing<T>;
+    CLI::GetSingleton().functionMap[data.tname]["PrintMethodConfig"] =
+        &PrintMethodConfig<T>;
+    CLI::GetSingleton().functionMap[data.tname]["PrintMethodInit"] =
+        &PrintMethodInit<T>;
     CLI::GetSingleton().functionMap[data.tname]["PrintInputProcessing"] =
         &PrintInputProcessing<T>;
-    CLI::GetSingleton().functionMap[data.tname]["ImportDecl"] = &ImportDecl<T>;
 
     // Add the ParamData object, then store.  This is necessary because we may
     // import more than one .so that uses CLI, so we have to keep the options

@@ -96,4 +96,29 @@ extern "C" bool MLPACK_HasParam(const char *identifier)
   return CLI::HasParam(identifier);
 }
 
+extern "C" char *MLPACK_GetParamString(const char *identifier)
+{
+  std::string val = CLI::GetParam<std::string>(identifier);
+  char *cstr = const_cast<char*>(val.c_str());
+  return cstr;
+}
+
+extern "C" double MLPACK_GetParamDouble(const char *identifier)
+{
+  double val = CLI::GetParam<double>(identifier);
+  return val;
+}
+
+extern "C" int MLPACK_GetParamInt(const char *identifier)
+{
+  int val = CLI::GetParam<int>(identifier);
+  return val;
+}
+
+extern "C" bool MLPACK_GetParamBool(const char *identifier)
+{
+  bool val= CLI::GetParam<bool>(identifier);
+  return val;
+}
+
 } // namespace mlpack

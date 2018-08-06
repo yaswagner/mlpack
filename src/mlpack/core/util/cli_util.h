@@ -39,6 +39,14 @@ extern void MLPACK_SetParamPtr(const char *identifier, const double *ptr, const 
 
 extern bool MLPACK_HasParam(const char *identifier);
 
+extern char *MLPACK_GetParamString(const char *identifier);
+
+extern double MLPACK_GetParamDouble(const char *identifier);
+
+extern int MLPACK_GetParamInt(const char *identifier);
+
+extern bool MLPACK_GetParamBool(const char *identifier);
+
 #if defined(__cplusplus) || defined(c_plusplus)
 }
 #endif
