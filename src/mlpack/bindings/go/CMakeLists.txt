@@ -78,7 +78,8 @@ add_custom_target(go_copy ALL DEPENDS mlpack)
 add_custom_command(TARGET go_copy PRE_BUILD
     COMMAND ${CMAKE_COMMAND} -E make_directory
         ${CMAKE_BINARY_DIR}/src/mlpack/bindings/go/mlpack/
-        ${CMAKE_BINARY_DIR}/src/mlpack/bindings/go/mlpack/capi/)
+    COMMAND ${CMAKE_COMMAND} -E make_directory
+        ${CMAKE_BINARY_DIR}/src/mlpack/bindings/go/mlpack/capi)
 foreach(go_file ${CAPI_SOURCES})
 add_custom_command(TARGET go_copy PRE_BUILD
     COMMAND ${CMAKE_COMMAND} ARGS -E copy
@@ -198,9 +199,15 @@ add_dependencies(build_go_${name} build_h_${name})
 add_library(mlpack_go_${name} SHARED
           ${CMAKE_BINARY_DIR}/src/mlpack/bindings/go/mlpack/capi/${name}.cpp
           ${CMAKE_BINARY_DIR}/src/mlpack/bindings/go/mlpack/capi/${name}.h)
+set_source_files_properties(${CMAKE_BINARY_DIR}/src/mlpack/bindings/go/mlpack/capi/${name}.cpp
+   PROPERTIES GENERATED TRUE)
+set_source_files_properties(${CMAKE_BINARY_DIR}/src/mlpack/bindings/go/mlpack/capi/${name}.h
+   PROPERTIES GENERATED TRUE)
 target_link_libraries(mlpack_go_${name} mlpack ${MLPACK_LIBRARIES})
 target_compile_definitions(mlpack_go_${name} PUBLIC "BINDING_TYPE=BINDING_TYPE_GO")
 set_target_properties(mlpack_go_${name} PROPERTIES
           LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/src/mlpack/bindings/go/mlpack)
+
+add_dependencies(mlpack_go_${name} build_go_${name})
 
 endmacro ()

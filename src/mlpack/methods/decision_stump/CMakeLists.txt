@@ -18,3 +18,4 @@ set(MLPACK_SRCS ${MLPACK_SRCS} ${DIR_SRCS} PARENT_SCOPE)
 
 add_cli_executable(decision_stump)
 add_python_binding(decision_stump)
+add_go_binding(decision_stump)
