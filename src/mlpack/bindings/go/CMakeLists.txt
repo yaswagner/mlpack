@@ -26,6 +26,7 @@ set(BINDING_SOURCES
   print_go.cpp
   print_h.hpp
   print_h.cpp
+  print_import_decl.hpp
   print_input_processing.hpp
   print_method_config.hpp
   print_method_init.hpp
@@ -35,14 +36,36 @@ set(BINDING_SOURCES
 
 # These are all the files we need to compile Go bindings for mlpack that are
 # not a part of mlpack itself.
-set(GO_SOURCES
-  mlpack/arma_util.cpp
-  mlpack/arma_util.h
-  mlpack/arma_util.hpp
-  mlpack/cli_util.cpp
-  mlpack/cli_util.h
-  mlpack/cli_util.hpp
+set(CGO_SOURCES
+  mlpack/arma_util.go
+  mlpack/cli_util.go
 )
+
+# These are all the files we need to compile Go bindings for mlpack that are
+# not a part of mlpack itself.
+set(CAPI_SOURCES
+  mlpack/capi/arma_util.cpp
+  mlpack/capi/arma_util.h
+  mlpack/capi/arma_util.hpp
+  mlpack/capi/cli_util.cpp
+  mlpack/capi/cli_util.h
+  mlpack/capi/cli_util.hpp
+)
+
+# These are all the files we need to compile Go bindings for mlpack that are
+# not a part of mlpack itself.
+set(UTIL_SOURCES
+  mlpack/capi/arma_util.cpp
+  mlpack/capi/cli_util.cpp
+)
+
+add_library(go_util SHARED
+        ${CMAKE_SOURCE_DIR}/src/mlpack/bindings/go/mlpack/capi/arma_util.cpp
+        ${CMAKE_SOURCE_DIR}/src/mlpack/bindings/go/mlpack/capi/cli_util.cpp)
+target_link_libraries(go_util mlpack ${MLPACK_LIBRARIES})
+target_compile_definitions(go_util PUBLIC "BINDING_TYPE=BINDING_TYPE_GO")
+set_target_properties(go_util PROPERTIES
+          LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/src/mlpack/bindings/go/mlpack/)
 
 # Set the include directories correctly.
 get_property(GO_INCLUDE_DIRECTORIES DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
@@ -55,23 +78,29 @@ add_custom_target(go_copy ALL DEPENDS mlpack)
 add_custom_command(TARGET go_copy PRE_BUILD
     COMMAND ${CMAKE_COMMAND} -E make_directory
         ${CMAKE_BINARY_DIR}/src/mlpack/bindings/go/mlpack/
-        ${CMAKE_BINARY_DIR}/src/mlpack/bindings/go/methods/)
-foreach(go_file ${GO_SOURCES})
+        ${CMAKE_BINARY_DIR}/src/mlpack/bindings/go/mlpack/capi/)
+foreach(go_file ${CAPI_SOURCES})
 add_custom_command(TARGET go_copy PRE_BUILD
     COMMAND ${CMAKE_COMMAND} ARGS -E copy
         ${CMAKE_CURRENT_SOURCE_DIR}/${go_file}
+        ${CMAKE_BINARY_DIR}/src/mlpack/bindings/go/mlpack/capi/)
+endforeach()
+foreach(cgo_file ${CGO_SOURCES})
+add_custom_command(TARGET go_copy PRE_BUILD
+    COMMAND ${CMAKE_COMMAND} ARGS -E copy
+        ${CMAKE_CURRENT_SOURCE_DIR}/${cgo_file}
         ${CMAKE_BINARY_DIR}/src/mlpack/bindings/go/mlpack/)
 endforeach()
-
 
 # Add a macro to build a go binding.
 macro (add_go_binding name)
 
 
-# Create, e.g., libmlpack_go_pca.so.
-add_library(mlpack_go_${name} SHARED ${CMAKE_SOURCE_DIR}/src/mlpack/methods/${name}/${name}_main.cpp)
-target_link_libraries(mlpack_go_${name} mlpack ${MLPACK_LIBRARIES})
-target_compile_definitions(mlpack_go_${name} PUBLIC "BINDING_TYPE=BINDING_TYPE_GO")
+
+# Append sources (with directory name) to list of all mlpack sources (used at
+# the parent scope).
+
+set(MLPACK_SRCS ${MLPACK_SRCS} ${DIR_SRCS} PARENT_SCOPE)
 
 # Create .cpp file for C API, e.g. pca.cpp.
 add_custom_command(OUTPUT ${CMAKE_BINARY_DIR}/src/mlpack/bindings/go/generate_cpp_${name}.cpp
@@ -93,7 +122,7 @@ set_target_properties(generate_cpp_${name} PROPERTIES COMPILE_FLAGS
 add_custom_command(TARGET generate_cpp_${name} POST_BUILD
     COMMAND ${CMAKE_COMMAND}
         -DGENERATE_CPP_PROGRAM=${CMAKE_BINARY_DIR}/bin/generate_cpp_${name}
-        -DCPP_OUTPUT_FILE=${CMAKE_BINARY_DIR}/src/mlpack/bindings/go/mlpack/${name}.cpp
+        -DCPP_OUTPUT_FILE=${CMAKE_BINARY_DIR}/src/mlpack/bindings/go/mlpack/capi/${name}.cpp
         -P ${CMAKE_SOURCE_DIR}/CMake/GenerateCPP.cmake)
 
 add_custom_target(build_cpp_${name}
@@ -123,7 +152,7 @@ set_target_properties(generate_h_${name} PROPERTIES COMPILE_FLAGS
 add_custom_command(TARGET generate_h_${name} POST_BUILD
     COMMAND ${CMAKE_COMMAND}
         -DGENERATE_H_PROGRAM=${CMAKE_BINARY_DIR}/bin/generate_h_${name}
-        -DH_OUTPUT_FILE=${CMAKE_BINARY_DIR}/src/mlpack/bindings/go/mlpack/${name}.h
+        -DH_OUTPUT_FILE=${CMAKE_BINARY_DIR}/src/mlpack/bindings/go/mlpack/capi/${name}.h
         -P ${CMAKE_SOURCE_DIR}/CMake/GenerateH.cmake)
 
 add_custom_target(build_h_${name}
@@ -153,8 +182,7 @@ set_target_properties(generate_go_${name} PROPERTIES COMPILE_FLAGS
 add_custom_command(TARGET generate_go_${name} POST_BUILD
     COMMAND ${CMAKE_COMMAND}
         -DGENERATE_GO_PROGRAM=${CMAKE_BINARY_DIR}/bin/generate_go_${name}
-        -DGO_OUTPUT_FILE=${CMAKE_BINARY_DIR}/src/mlpack/bindings/go/methods/${name}.go
-        -DGO_OUTPUT_FILE=${CMAKE_SOURCE_DIR}/src/mlpack/bindings/go/methods/${name}.go
+        -DGO_OUTPUT_FILE=${CMAKE_BINARY_DIR}/src/mlpack/bindings/go/mlpack/${name}.go
         -P ${CMAKE_SOURCE_DIR}/CMake/GenerateGo.cmake)
 
 add_custom_target(build_go_${name}
@@ -165,5 +193,14 @@ add_custom_target(build_go_${name}
 add_dependencies(build_go_${name} generate_go_${name})
 add_dependencies(build_go_${name} build_cpp_${name})
 add_dependencies(build_go_${name} build_h_${name})
+
+# Create, e.g., libmlpack_go_pca.so.
+add_library(mlpack_go_${name} SHARED
+          ${CMAKE_BINARY_DIR}/src/mlpack/bindings/go/mlpack/capi/${name}.cpp
+          ${CMAKE_BINARY_DIR}/src/mlpack/bindings/go/mlpack/capi/${name}.h)
+target_link_libraries(mlpack_go_${name} mlpack ${MLPACK_LIBRARIES})
+target_compile_definitions(mlpack_go_${name} PUBLIC "BINDING_TYPE=BINDING_TYPE_GO")
+set_target_properties(mlpack_go_${name} PROPERTIES
+          LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/src/mlpack/bindings/go/mlpack)
 
 endmacro ()

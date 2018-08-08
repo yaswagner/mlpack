@@ -19,6 +19,7 @@
 #include "print_defn_input.hpp"
 #include "print_defn_output.hpp"
 #include "print_doc.hpp"
+#include "print_import_decl.hpp"
 #include "print_input_processing.hpp"
 #include "print_method_config.hpp"
 #include "print_method_init.hpp"
@@ -100,6 +101,7 @@ class GoOption
     CLI::GetSingleton().functionMap[data.tname]["PrintDefnOutput"] =
         &PrintDefnOutput<T>;
     CLI::GetSingleton().functionMap[data.tname]["PrintDoc"] = &PrintDoc<T>;
+    CLI::GetSingleton().functionMap[data.tname]["ImportDecl"] = &ImportDecl<T>;
     CLI::GetSingleton().functionMap[data.tname]["PrintOutputProcessing"] =
         &PrintOutputProcessing<T>;
     CLI::GetSingleton().functionMap[data.tname]["PrintMethodConfig"] =

@@ -155,7 +155,7 @@ void PrintClassDefnH(
    * extern void *MLPACK_GetTypePtr(const char* identifier);
    *
    */
-   std::cout << "extern void *MLPACK_Set" << printedType
+   std::cout << "extern void MLPACK_Set" << printedType
               << "Ptr(const char* identifier," << std::endl;
    std::cout << "         void* value);"
               << std::endl;
@@ -255,7 +255,7 @@ void PrintClassDefnGo(
               << "(identifier string, ptr *" << printedType << ") {"
               << std::endl;
    std::cout << " C.MLPACK_Set" << printedType
-              << "Ptr(C.CString(identifier), (unsafe.Pointer)(ptr.mem)"
+              << "Ptr(C.CString(identifier), (unsafe.Pointer)(ptr.mem))"
               << std::endl;
    std::cout << "}" << std::endl;
    std::cout << std::endl;

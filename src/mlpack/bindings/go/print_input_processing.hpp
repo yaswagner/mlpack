@@ -44,10 +44,9 @@ void PrintInputProcessing(
   if (std::is_same<T, bool>::value)
     def = "false";
 
-    // Make sure that we don't use names that are Python keywords.
-    std::string name = d.name;
-    std::string goParamName = name;
-    if (!name.empty())
+    std::string paramName = d.name;
+    std::string goParamName = paramName;
+    if (!paramName.empty())
     {
       goParamName[0] = std::toupper(goParamName[0]);
     }
@@ -66,7 +65,7 @@ void PrintInputProcessing(
     if (d.cppType == "std::string")
     {
       std::string value = boost::any_cast<std::string>(d.value);
-      std::cout << value;
+      std::cout << "\"" << value << "\"";
     }
     else if (d.cppType == "double")
     {
@@ -90,9 +89,9 @@ void PrintInputProcessing(
     std::cout << prefix << "  SetParam" << GetType<T>(d) << "(\""
         << d.name << "\", param.";
     if (GetType<T>(d) == "string")
-      std::cout << name << ".encode(\"UTF-8\")";
+      std::cout << paramName << ".encode(\"UTF-8\")";
     else if (GetType<T>(d) == "vector[string]")
-      std::cout << "[i.encode(\"UTF-8\") for i in " << name << "]";
+      std::cout << "[i.encode(\"UTF-8\") for i in " << paramName << "]";
     else
       std::cout << goParamName;
     std::cout << ")" << std::endl;
@@ -107,11 +106,11 @@ void PrintInputProcessing(
   else
   {
     std::cout << prefix << "SetParam" << GetType<T>(d) << "(\""
-        << d.name << "\", param.";
+        << d.name << "\", ";
     if (GetType<T>(d) == "string")
-      std::cout << name << ".encode(\"UTF-8\")";
+      std::cout << paramName << ".encode(\"UTF-8\")";
     else if (GetType<T>(d) == "vector[string]")
-      std::cout << "[i.encode(\"UTF-8\") for i in " << name << "]";
+      std::cout << "[i.encode(\"UTF-8\") for i in " <<paramName << "]";
     else
       std::cout << goParamName;
     std::cout << ")" << std::endl;
@@ -132,10 +131,10 @@ void PrintInputProcessing(
 {
   const std::string prefix(indent, ' ');
 
-  // Make sure that we don't use names that are Python keywords.
-  std::string name = d.name;
-  std::string goParamName = name;
-  if (!name.empty())
+  // Make sure that we don't useparamNames that are Python keywords.
+  std::string paramName = d.name;
+  std::string goParamName =paramName;
+  if (!paramName.empty())
   {
     goParamName[0] = std::toupper(goParamName[0]);
   }
@@ -148,20 +147,21 @@ void PrintInputProcessing(
       << std::endl;
   if (!d.required)
   {
-
-    std::cout << prefix << "if param." << goParamName << " != nil {" << std::endl;
-
-    std::cout << prefix << "  " << "GonumToArma(\"" << d.name
-        << "\", param." << goParamName << ")" << std::endl;
+    std::cout << prefix << "if param." << goParamName
+        << " != nil {" << std::endl;
+    std::cout << prefix << "  " << "GonumToArma" << GetType<T>(d)
+        << "(\"" << d.name << "\", param." << goParamName
+        << ")" << std::endl;
     std::cout << prefix << "  SetPassed(\"" << d.name << "\")"
         << std::endl;
     std::cout << prefix << "}" << std::endl;
   }
   else
   {
-    std::cout << prefix << "GonumToArma(\"" << d.name
-        << "\", param." << goParamName << ")" << std::endl;
-    std::cout << prefix << "  SetPassed(\"" << d.name << "\")"
+    std::cout << prefix << "GonumToArma" << GetType<T>(d)
+        << "(\"" << d.name << "\", " << paramName
+        << ")" << std::endl;
+    std::cout << prefix << "SetPassed(\"" << d.name << "\")"
         << std::endl;
   }
   std::cout << std::endl;
@@ -177,16 +177,16 @@ void PrintInputProcessing(
     const typename boost::disable_if<arma::is_arma_type<T>>::type* = 0,
     const typename boost::enable_if<data::HasSerialize<T>>::type* = 0)
 {
-  // First, get the correct class name if needed.
+  // First, get the correct classparamName if needed.
   std::string strippedType, printedType, defaultsType;
   StripType(d.cppType, strippedType, printedType, defaultsType);
 
   const std::string prefix(indent, ' ');
 
-  // Make sure that we don't use names that are Python keywords.
-  std::string name = d.name;
-  std::string goParamName = name;
-  if (!name.empty())
+  // Make sure that we don't useparamNames that are Python keywords.
+  std::string paramName = d.name;
+  std::string goParamName = paramName;
+  if (!paramName.empty())
   {
     goParamName[0] = std::toupper(goParamName[0]);
   }
@@ -210,8 +210,8 @@ void PrintInputProcessing(
   else
   {
       std::cout << prefix << "set" << printedType << "(\""
-          << d.name << "\", param." << goParamName << ")" << std::endl;
-      std::cout << prefix << "  SetPassed(\"" << d.name << "\")"
+          << d.name << "\", " << paramName << ")" << std::endl;
+      std::cout << prefix << "SetPassed(\"" << d.name << "\")"
           << std::endl;
   }
   std::cout << std::endl;
@@ -249,8 +249,8 @@ void PrintInputProcessing(const util::ParamData& d,
       *((size_t*) input));
 }
 
-} // namespace go
-} // namespace bindings
-} // namespace mlpack
+} //paramNamespace go
+} //paramNamespace bindings
+} //paramNamespace mlpack
 
 #endif

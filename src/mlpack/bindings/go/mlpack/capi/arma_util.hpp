@@ -13,7 +13,7 @@
 #define MLPACK_BINDINGS_GO_GONUM_ARMA_UTIL_HPP
 
 // Include Armadillo via mlpack.
-#include "cli.hpp"
+#include <mlpack/core/util/cli.hpp>
 #include <mlpack/core.hpp>
 
 namespace mlpack {

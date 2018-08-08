@@ -68,13 +68,17 @@ void PrintCPP(const ProgramDoc& programInfo,
   }
 
   // First, we must generate the header comment and namespace.
-  cout << "#include \"" << functionName << "_impl.hpp\""<< endl;
-  cout << "#include \"" << functionName << ".hpp\""<< endl;
   cout << "#include \"" << functionName << ".h\""<< endl;
-  cout << "#include \"" << functionName << "_main.cpp\""<< endl;
-  cout << "#include <mlpack/core/util/cli_util.hpp>" << endl;
+  cout << "#include <mlpack/methods/" << functionName
+        << "/" << functionName << ".hpp>"<< endl;
+  cout << "#include <mlpack/methods/" << functionName
+        << "/" << functionName << "_main.cpp>"<< endl;
+  cout << "#include <mlpack/bindings/go/mlpack/capi/cli_util.hpp>" << endl;
   cout << endl;
-  cout << "namespace mlpack {" << endl;
+  cout << "using namespace mlpack;" << endl;
+  cout << "using namespace mlpack::" << functionName << ";" << endl;
+  cout << "using namespace mlpack::util;" << endl;
+  cout << "using namespace std;" << endl;
   cout << endl;
 
   // Then we must print any class definitions if needed.
@@ -96,11 +100,8 @@ void PrintCPP(const ProgramDoc& programInfo,
   cout << "{" << endl;
   cout << "  " << functionName << "_mlpackMain();" << endl;
   cout << "}" << endl;
+  cout << endl;
 
-  // Closing bracket for namespace mlpack.
-  cout << endl;
-  cout << "} // namespace mlpack" << endl;
-  cout << endl;
 }
 
 } // namespace go

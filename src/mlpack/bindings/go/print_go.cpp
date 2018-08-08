@@ -74,19 +74,27 @@ void PrintGo(const util::ProgramDoc& programInfo,
   cout << "package mlpack" << endl;
   cout << endl;
   cout << "/*" << endl;
-  cout << "#cgo CFLAGS: -I. -g -Wall" << endl;
-  cout << "#cgo LDFLAGS: -L/usr/local/lib -lm -L/usr/local/lib/ "
-        << "-lmlpack -lmlpack_go_" << functionName << endl;
-  cout << "#include <mlpack/bindings/go/mlpack/" << functionName << ".h>" << endl;
+  cout << "#cgo CFLAGS: -I/capi -I. -g -Wall" << endl;
+  cout << "#cgo LDFLAGS: -L/usr/local/lib/ -lm "
+        << "-lmlpack -L. -lmlpack_go_" << functionName << endl;
+  cout << "#include <capi/" << functionName << ".h>" << endl;
+  cout << "#include <stdlib.h>" << endl;
   cout << " */" << endl;
   cout << "import \"C\" " << endl;
   cout << endl;
 
   cout << "import (" << endl;
   cout << "  " << "\"gonum.org/v1/gonum/mat\" " << endl;
+  for (size_t i = 0; i < inputOptions.size(); ++i)
+  {
+    const util::ParamData& d = parameters.at(inputOptions[i]);
+    size_t indent = 2;
+    CLI::GetSingleton().functionMap[d.tname]["ImportDecl"](d,
+        (void*) &indent, NULL);
+
+  }
   cout << ")" << endl;
   cout << endl;
-
 
   // Print Go method configuration struct
   std::string goFunctionName = functionName;
@@ -97,10 +105,9 @@ void PrintGo(const util::ProgramDoc& programInfo,
   for (size_t i = 0; i < inputOptions.size(); ++i)
   {
     const util::ParamData& d = parameters.at(inputOptions[i]);
-    size_t indent = 2;
+    size_t indent = 4;
     CLI::GetSingleton().functionMap[d.tname]["PrintMethodConfig"](d,
         (void*) &indent, NULL);
-
   }
   cout << "}" << endl;
   cout << endl;
@@ -221,7 +228,8 @@ void PrintGo(const util::ProgramDoc& programInfo,
   cout << "  if param.Copy_all_inputs == true {" << endl;
   cout << "    SetParamBool(\"copy_all_inputs\", param.Copy_all_inputs)" << endl;
   cout << "    SetPassed(\"copy_all_inputs\")" << endl;
-  cout << "" << endl;
+  cout << "  }" << endl;
+  cout << endl;
 
   // Do any input processing.
   for (size_t i = 0; i < inputOptions.size(); ++i)

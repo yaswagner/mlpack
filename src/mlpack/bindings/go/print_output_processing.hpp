@@ -139,10 +139,7 @@ void PrintOutputProcessing(const util::ParamData& d,
                            const void* /*input*/,
                            void* /* output */)
 {
-
-  PrintOutputProcessing<typename std::remove_pointer<T>::type>(d,
-      2);
-
+  PrintOutputProcessing<typename std::remove_pointer<T>::type>(d, 2);
 }
 
 } // namespace go
