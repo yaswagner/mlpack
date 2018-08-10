@@ -31,6 +31,8 @@ namespace go {
  * @param functionName Name of the function (i.e. "pca").
  */
 void PrintCPP(const ProgramDoc& programInfo,
+              const string& mainFilename,
+              const string& mainDirectory,
               const string& functionName)
 {
   // Restore parameters.
@@ -69,16 +71,39 @@ void PrintCPP(const ProgramDoc& programInfo,
 
   // First, we must generate the header comment and namespace.
   cout << "#include \"" << functionName << ".h\""<< endl;
-  cout << "#include <mlpack/methods/" << functionName
-        << "/" << functionName << ".hpp>"<< endl;
-  cout << "#include <mlpack/methods/" << functionName
-        << "/" << functionName << "_main.cpp>"<< endl;
+  cout << "#include <" << mainFilename << ">" << endl;
   cout << "#include <mlpack/bindings/go/mlpack/capi/cli_util.hpp>" << endl;
+
+  // // Print any extra header files we need to include
+  // for (ParamIter it = parameters.begin(); it != parameters.end(); ++it)
+  // {
+  //   int counter;
+  //   const util::ParamData& d = it->second;
+  //   if (d.input)
+  //   {
+  //     bool ismodel = HasModel(d, NULL, NULL);
+  //     if (ismodel == true)
+  //       cout << "#include " << mainDirectory << "/" << d.name << std::endl;
+  //   }
+  // }
   cout << endl;
+
   cout << "using namespace mlpack;" << endl;
-  cout << "using namespace mlpack::" << functionName << ";" << endl;
   cout << "using namespace mlpack::util;" << endl;
   cout << "using namespace std;" << endl;
+
+  // // Print any extra namespace we might need.
+  // for (ParamIter it = parameters.begin(); it != parameters.end(); ++it)
+  // {
+  //   int counter;
+  //   const util::ParamData& d = it->second;
+  //   if (d.input)
+  //   {
+  //     bool ismodel = HasModel<T>(HasModel(d, NULL, NULL);
+  //     if (ismodel == true)
+  //       cout << "using namespace mlpack::" << d.name << std::endl;
+  //   }
+  // }
   cout << endl;
 
   // Then we must print any class definitions if needed.

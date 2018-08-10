@@ -73,7 +73,6 @@ class GoOption
       data.persistent = false;
     data.cppType = cppName;
 
-    // Every parameter we'll get from Python will have the correct type.
     data.value = boost::any(defaultValue);
 
     // Restore the parameters for this program.

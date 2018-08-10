@@ -34,15 +34,12 @@ void PrintOutputProcessing(
         std::tuple<data::DatasetInfo, arma::mat>>>::type* = 0)
 {
   const std::string prefix(indent, ' ');
-
-
   /**
    * This gives us code like:
    *
    *
    */
-  std::cout << prefix << "var" << d.name << std::endl;
-  std::cout << d.name << " := GetParam" << GetType<T>(d)
+  std::cout << prefix << d.name << " := GetParam" << GetType<T>(d)
       << "(\"" << d.name << "\")" << std::endl;
   if (GetType<T>(d) == "string")
   {
@@ -113,11 +110,9 @@ void PrintOutputProcessing(
    *
    */
    std::cout << prefix << "var " << d.name << " "
-      << printedType << std::endl;
-   std::cout << prefix << d.name << ".get" << printedType
+      << strippedType << std::endl;
+   std::cout << prefix << d.name << ".get" << strippedType
       << "(\"" << d.name << "\")" << std::endl;
-   std::cout << std::endl;
-
 }
 
 /**

@@ -107,7 +107,6 @@ void PrintMethodConfig(
   if (std::is_same<T, bool>::value)
     def = "false";
 
-    // Make sure that we don't use names that are Python keywords.
     std::string name = d.name;
     std::string goParamName = name;
     if (!name.empty())

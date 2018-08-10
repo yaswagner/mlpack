@@ -72,7 +72,7 @@ void PrintDefnOutput(
   std::string strippedType, printedType, defaultsType;
   StripType(d.cppType, strippedType, printedType, defaultsType);
 
-  std::cout << printedType;
+  std::cout << strippedType;
 }
 
 /**

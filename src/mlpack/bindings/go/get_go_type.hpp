@@ -15,6 +15,7 @@
 
 #include <mlpack/prereqs.hpp>
 #include <mlpack/core/util/is_std_vector.hpp>
+#include "strip_type.hpp"
 
 namespace mlpack {
 namespace bindings {
@@ -95,7 +96,7 @@ inline std::string GetGoType(
     const util::ParamData& d,
     const typename boost::enable_if<util::IsStdVector<T>>::type* = 0)
 {
-  return "list of " + GetGoType<typename T::value_type>(d) + "s";
+  return "[]" + GetGoType<typename T::value_type>(d);
 }
 
 template<typename T>
@@ -118,7 +119,10 @@ inline std::string GetGoType(
     const typename boost::disable_if<arma::is_arma_type<T>>::type* = 0,
     const typename boost::enable_if<data::HasSerialize<T>>::type* = 0)
 {
-  return d.cppType;
+  std::string strippedType, printedType, defaultsType;
+  StripType(d.cppType, strippedType, printedType, defaultsType);
+
+  return strippedType;
 }
 
 } // namespace go

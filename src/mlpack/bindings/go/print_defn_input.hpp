@@ -83,7 +83,7 @@ void PrintDefnInput(
   if (d.required)
   {
     std::string name = d.name;
-    std::cout << " *" << printedType;
+    std::cout << name << " *" << strippedType;
   }
 }
 

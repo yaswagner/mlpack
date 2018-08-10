@@ -105,6 +105,8 @@ void PrintInputProcessing(
   }
   else
   {
+    std::string lowercaseParamName = d.name;
+    lowercaseParamName[0]  = std::tolower(lowercaseParamName[0]);
     std::cout << prefix << "SetParam" << GetType<T>(d) << "(\""
         << d.name << "\", ";
     if (GetType<T>(d) == "string")
@@ -112,7 +114,7 @@ void PrintInputProcessing(
     else if (GetType<T>(d) == "vector[string]")
       std::cout << "[i.encode(\"UTF-8\") for i in " <<paramName << "]";
     else
-      std::cout << goParamName;
+      std::cout <<lowercaseParamName;
     std::cout << ")" << std::endl;
     std::cout << prefix << "SetPassed(\"" << d.name << "\")"
         << std::endl;
@@ -158,8 +160,10 @@ void PrintInputProcessing(
   }
   else
   {
+    std::string lowercaseParamName = d.name;
+    lowercaseParamName[0]  = std::tolower(lowercaseParamName[0]);
     std::cout << prefix << "GonumToArma" << GetType<T>(d)
-        << "(\"" << d.name << "\", " << paramName
+        << "(\"" << d.name << "\", " << lowercaseParamName
         << ")" << std::endl;
     std::cout << prefix << "SetPassed(\"" << d.name << "\")"
         << std::endl;
@@ -201,7 +205,7 @@ void PrintInputProcessing(
   {
 
     std::cout << prefix << "if param." << goParamName << " != nil {" << std::endl;
-    std::cout << prefix << "  " << "set" << printedType
+    std::cout << prefix << "  " << "set" << strippedType
         << "(\"" << d.name << "\", param." << goParamName << ")" << std::endl;
     std::cout << prefix << "  SetPassed(\"" << d.name << "\")"
         << std::endl;
@@ -209,7 +213,7 @@ void PrintInputProcessing(
   }
   else
   {
-      std::cout << prefix << "set" << printedType << "(\""
+      std::cout << prefix << "set" << strippedType << "(\""
           << d.name << "\", " << paramName << ")" << std::endl;
       std::cout << prefix << "SetPassed(\"" << d.name << "\")"
           << std::endl;

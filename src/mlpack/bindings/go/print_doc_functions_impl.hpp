@@ -14,6 +14,7 @@
 #define MLPACK_BINDINGS_GO_PRINT_DOC_FUNCTIONS_IMPL_HPP
 
 #include <mlpack/core/util/hyphenate_string.hpp>
+#include "strip_type.hpp"
 
 namespace mlpack {
 namespace bindings {
@@ -217,10 +218,14 @@ std::string ProgramCall(const std::string& programName, Args... args)
   // Now process each input required parameters.
   oss << PrintInputOptions(args...);
   std::string input = oss.str();
+  if (input != "")
+    result = result + input + ", ";
   oss.str("");
-  oss <<  ", param)";
+  if (param != "")
+   result = result + "param";
 
-  return result + util::HyphenateString(input, 0) + oss.str();
+  result = result + ")";
+  return result;
 }
 
 /**
@@ -229,8 +234,13 @@ std::string ProgramCall(const std::string& programName, Args... args)
 inline std::string PrintModel(const std::string& modelName)
 {
   std::string goModelName = modelName;
-  goModelName[0] = std::toupper(goModelName[0]);
-  return "" + goModelName + "";
+  const size_t loc = goModelName.find("<>");
+  if (loc != std::string::npos)
+  {
+    // Convert it from "<>".
+    goModelName.replace(loc, 2, "");
+  }
+  return goModelName;
 }
 
 /**

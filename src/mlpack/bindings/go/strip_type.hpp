@@ -43,8 +43,8 @@ inline void StripType(const std::string& inputType,
     {
       // Convert it from "<>".
       strippedType.replace(loc, 2, "");
-      printedType.replace(loc, 2, "[]");
-      defaultsType.replace(loc, 2, "[T=*]");
+      printedType.replace(loc, 2, "<>");
+      defaultsType.replace(loc, 2, "<T>");
     }
   }
 }

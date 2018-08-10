@@ -15,8 +15,8 @@ set(BINDING_SOURCES
   mlpack/cli_util.h
   mlpack/cli_util.hpp
   print_class_defn.hpp
-  print_cpp.hpp
   print_cpp.cpp
+  print_cpp.hpp
   print_defn_input.hpp
   print_defn_output.hpp
   print_doc.hpp
@@ -59,6 +59,19 @@ set(UTIL_SOURCES
   mlpack/capi/cli_util.cpp
 )
 
+set(TEST_SOURCES
+  tests/test_go_binding.go
+)
+
+if (BUILD_TESTS)
+  foreach(test_file ${TEST_SOURCES})
+    add_custom_command(TARGET go_copy PRE_BUILD
+        COMMAND ${CMAKE_COMMAND} ARGS -E copy
+            ${CMAKE_CURRENT_SOURCE_DIR}/${test_file}
+            ${CMAKE_BINARY_DIR}/src/mlpack/bindings/go/tests/)
+  endforeach ()
+endif ()
+
 add_library(go_util SHARED
         ${CMAKE_SOURCE_DIR}/src/mlpack/bindings/go/mlpack/capi/arma_util.cpp
         ${CMAKE_SOURCE_DIR}/src/mlpack/bindings/go/mlpack/capi/cli_util.cpp)
@@ -96,8 +109,6 @@ endforeach()
 # Add a macro to build a go binding.
 macro (add_go_binding name)
 
-
-
 # Append sources (with directory name) to list of all mlpack sources (used at
 # the parent scope).
 
@@ -109,6 +120,7 @@ add_custom_command(OUTPUT ${CMAKE_BINARY_DIR}/src/mlpack/bindings/go/generate_cp
        -DGENERATE_CPP_IN=${CMAKE_SOURCE_DIR}/src/mlpack/bindings/go/generate_go.cpp.in
        -DGENERATE_CPP_OUT=${CMAKE_BINARY_DIR}/src/mlpack/bindings/go/generate_cpp_${name}.cpp
        -DPROGRAM_MAIN_FILE=${CMAKE_CURRENT_SOURCE_DIR}/${name}_main.cpp
+       -DPROGRAM_MAIN_DIR=${CMAKE_CURRENT_SOURCE_DIR}
        -DPROGRAM_NAME=${name}
        -P ${CMAKE_SOURCE_DIR}/CMake/GenerateGoCPP.cmake
    DEPENDS ${CMAKE_SOURCE_DIR}/src/mlpack/bindings/go/generate_go.cpp.in)
@@ -211,3 +223,7 @@ set_target_properties(mlpack_go_${name} PROPERTIES
 add_dependencies(mlpack_go_${name} build_go_${name})
 
 endmacro ()
+
+if (BUILD_TESTS)
+  add_subdirectory(tests)
+endif ()

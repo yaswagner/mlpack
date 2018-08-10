@@ -52,42 +52,35 @@ void PrintClassDefnCPP(
     const typename boost::disable_if<arma::is_arma_type<T>>::type* = 0,
     const typename boost::enable_if<data::HasSerialize<T>>::type* = 0)
 {
+  const std::string prefix = "  ";
   // First, we have to parse the type.  If we have something like, e.g.,
   // 'LogisticRegression<>', we must convert this to 'LogisticRegression[].'
   std::string strippedType, printedType, defaultsType;
   StripType(d.cppType, strippedType, printedType, defaultsType);
 
+
   /**
    * This will produce code like:
-   * extern "C" void MLPACK_SetPerceptronModelPtr(const char* identifier,
-                  MLPACK_PerceptronModel* value)
-   * {
-   *   SetParamPtr<PerceptronModel>(identifier, reinterpret_cast<PerceptronModel*>(value), CLI::HasParam("copy_all_inputs"));
-   * }
-
-   * extern "C" void *MLPACK_GetPerceptronModelPtr(const char* identifier)
-   * {
-   *   PerceptronModel *modelptr = GetParamPtr<PerceptronModel>(identifier);
-   *   return modelptr;
-   * }
    */
-   std::cout << "extern \"C\" void MLPACK_Set" << printedType
+   std::cout << "extern \"C\" void MLPACK_Set" << strippedType
               << "Ptr(const char* identifier, " << std::endl;
    std::cout << "               void* value)" << std::endl;
    std::cout << "{" << std::endl;
-   std::cout << "    SetParamPtr<" << printedType
+   std::cout << prefix << "SetParamPtr<" << printedType
               << ">(identifier," << std::endl;
-   std::cout << "       static_cast<" << printedType
+   std::cout << prefix << prefix << prefix
+              << "static_cast<" << printedType
               << "*>(value)," << std::endl;
-   std::cout << "       CLI::HasParam(\"copy_all_inputs\"));" << std::endl;
+   std::cout << prefix << prefix << prefix
+              << "CLI::HasParam(\"copy_all_inputs\"));" << std::endl;
    std::cout << "}" << std::endl;
    std::cout << std::endl;
-   std::cout << "extern \"C\" void *MLPACK_Get" << printedType
+   std::cout << "extern \"C\" void *MLPACK_Get" << strippedType
               << "Ptr(const char* identifier)" << std::endl;
    std::cout << "{" << std::endl;
-   std::cout << "    " << printedType << " *modelptr = GetParamPtr<"
+   std::cout << prefix <<printedType << " *modelptr = GetParamPtr<"
               << printedType << ">(identifier);" << std::endl;
-   std::cout << "    " << "return modelptr;" << std::endl;
+   std::cout << prefix << "return modelptr;" << std::endl;
    std::cout << "}" << std::endl;
    std::cout << std::endl;
 }
@@ -155,12 +148,12 @@ void PrintClassDefnH(
    * extern void *MLPACK_GetTypePtr(const char* identifier);
    *
    */
-   std::cout << "extern void MLPACK_Set" << printedType
+   std::cout << "extern void MLPACK_Set" << strippedType
               << "Ptr(const char* identifier," << std::endl;
    std::cout << "         void* value);"
               << std::endl;
    std::cout << std::endl;
-   std::cout << "extern void *MLPACK_Get" << printedType
+   std::cout << "extern void *MLPACK_Get" << strippedType
               << "Ptr(const char* identifier);" << std::endl;
    std::cout << std::endl;
 }
@@ -224,37 +217,37 @@ void PrintClassDefnGo(
    *
    * }
    */
-   std::cout << "type " << printedType << " struct {" << std::endl;
+   std::cout << "type " << strippedType << " struct {" << std::endl;
    std::cout << " mem unsafe.Pointer" << std::endl;
    std::cout << "}" << std::endl;
    std::cout << std::endl;
-   std::cout << "func (m *" << printedType << ") alloc"
-              << printedType << "(identifier string) {"
+   std::cout << "func (m *" << strippedType << ") alloc"
+              << strippedType << "(identifier string) {"
               << std::endl;
-   std::cout << " m.mem = C.MLPACK_Get" << printedType
+   std::cout << " m.mem = C.MLPACK_Get" << strippedType
               << "Ptr(C.CString(identifier))" << std::endl;
    std::cout << " runtime.SetFinalizer(m, free"
-              << printedType << ")" << std::endl;
+              << strippedType << ")" << std::endl;
    std::cout << "}" << std::endl;
    std::cout << std::endl;
    std::cout << std::endl;
-   std::cout << "func free" << printedType
-              << "(m *" << printedType << ") {" << std::endl;
+   std::cout << "func free" << strippedType
+              << "(m *" << strippedType << ") {" << std::endl;
    std::cout << " C.free(unsafe.Pointer(m.mem))" << std::endl;
    std::cout << "}" << std::endl;
    std::cout << std::endl;
-   std::cout << "func (m *" << printedType << ") get"
-              << printedType << "(identifier string) {" << std::endl;
-   std::cout << " m.alloc" << printedType << "(identifier)" << std::endl;
+   std::cout << "func (m *" << strippedType << ") get"
+              << strippedType << "(identifier string) {" << std::endl;
+   std::cout << " m.alloc" << strippedType << "(identifier)" << std::endl;
    std::cout << " time.Sleep(time.Second)" << std::endl;
    std::cout << " runtime.GC()" << std::endl;
    std::cout << " time.Sleep(time.Second)" << std::endl;
    std::cout << "}" << std::endl;
    std::cout << std::endl;
-   std::cout << "func set" << printedType
-              << "(identifier string, ptr *" << printedType << ") {"
+   std::cout << "func set" << strippedType
+              << "(identifier string, ptr *" << strippedType << ") {"
               << std::endl;
-   std::cout << " C.MLPACK_Set" << printedType
+   std::cout << " C.MLPACK_Set" << strippedType
               << "Ptr(C.CString(identifier), (unsafe.Pointer)(ptr.mem))"
               << std::endl;
    std::cout << "}" << std::endl;

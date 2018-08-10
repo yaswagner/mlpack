@@ -28,6 +28,8 @@ namespace go {
  * @param functionName Name of the function (i.e. "pca").
  */
 void PrintCPP(const util::ProgramDoc& programInfo,
+              const std::string& mainFilename,
+              const std::string& mainDirectory,
               const std::string& functionName);
 
 } // namespace go
