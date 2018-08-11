@@ -13,6 +13,7 @@
 #define MLPACK_BINDINGS_GO_PRINT_INPUT_PROCESSING_HPP
 
 #include <mlpack/prereqs.hpp>
+#include "get_arma_type.hpp"
 #include "get_type.hpp"
 #include "get_go_type.hpp"
 #include "strip_type.hpp"
@@ -151,8 +152,8 @@ void PrintInputProcessing(
   {
     std::cout << prefix << "if param." << goParamName
         << " != nil {" << std::endl;
-    std::cout << prefix << "  " << "GonumToArma" << GetType<T>(d)
-        << "(\"" << d.name << "\", param." << goParamName
+    std::cout << prefix << "  " << "GonumToArma_" << GetType<T>(d)
+         << "(\"" << d.name << "\", param." << goParamName
         << ")" << std::endl;
     std::cout << prefix << "  SetPassed(\"" << d.name << "\")"
         << std::endl;
@@ -162,7 +163,7 @@ void PrintInputProcessing(
   {
     std::string lowercaseParamName = d.name;
     lowercaseParamName[0]  = std::tolower(lowercaseParamName[0]);
-    std::cout << prefix << "GonumToArma" << GetType<T>(d)
+    std::cout << prefix << "GonumToArma_" << GetType<T>(d)
         << "(\"" << d.name << "\", " << lowercaseParamName
         << ")" << std::endl;
     std::cout << prefix << "SetPassed(\"" << d.name << "\")"

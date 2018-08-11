@@ -9,7 +9,7 @@ namespace util {
 
 extern "C" {
 
-void MLPACK_ToArma(const char *identifier, const double mat[], int row, int col)
+void MLPACK_ToArma_mat(const char *identifier, const double mat[], int row, int col)
 {
   // Advanced constructor.
   arma::mat m(const_cast<double*>(mat), row, col, false, true);
@@ -18,62 +18,198 @@ void MLPACK_ToArma(const char *identifier, const double mat[], int row, int col)
   SetParam(identifier, m);
 }
 
-void *MLPACK_ArmaPtr(const char *identifier){
+void *MLPACK_ArmaPtr_mat(const char *identifier)
+{
   arma::mat output = CLI::GetParam<arma::mat>(identifier);
+  if (output.is_empty())
+  {
+    std::cout << "Nil" << std::endl;
+    return NULL;
+  }
+  else
+  {
   void *ptr = GetMemory(output);
   std::cout << ptr << std::endl;
   return ptr;
+  }
 }
 
-void *MLPACK_ArmaRowPtr(const char *identifier){
+void *MLPACK_ArmaPtr_umat(const char *identifier)
+{
+  arma::Mat<double> output = arma::conv_to<arma::Mat<double>>::from(CLI::GetParam<arma::Mat<size_t>>(identifier));
+  if (output.is_empty())
+  {
+    std::cout << "Nil" << std::endl;
+    return NULL;
+  }
+  else
+  {
+  void *ptr = GetMemory(output);
+  std::cout << ptr << std::endl;
+  return ptr;
+  }
+}
+
+
+void *MLPACK_ArmaPtr_row(const char *identifier)
+{
+  arma::Row<double> output = CLI::GetParam<arma::Row<double>>(identifier);
+  if (output.is_empty())
+  {
+    std::cout << "Nil" << std::endl;
+    return NULL;
+  }
+  else
+  {
+  void *ptr = GetMemory(output);
+  std::cout << ptr << std::endl;
+  return ptr;
+  }
+}
+
+void *MLPACK_ArmaPtr_urow(const char *identifier)
+{
   arma::Row<double> output = arma::conv_to<arma::Row<double>>::from(CLI::GetParam<arma::Row<size_t>>(identifier));
+  if (output.is_empty())
+  {
+    std::cout << "Nil" << std::endl;
+    return NULL;
+  }
+  else
+  {
   void *ptr = GetMemory(output);
+  std::cout << ptr << std::endl;
   return ptr;
+  }
 }
 
-void *MLPACK_ArmaColPtr(const char *identifier){
-  arma::Col<size_t> output = CLI::GetParam<arma::Col<size_t>>(identifier);
+
+void *MLPACK_ArmaPtr_col(const char *identifier)
+{
+  arma::Col<double> output = CLI::GetParam<arma::Col<double>>(identifier);
+  if (output.is_empty())
+  {
+    std::cout << "Nil" << std::endl;
+    return NULL;
+  }
+  else
+  {
   void *ptr = GetMemory(output);
+  std::cout << ptr << std::endl;
   return ptr;
+  }
 }
+
+void *MLPACK_ArmaPtr_ucol(const char *identifier)
+{
+  arma::Col<double> output = arma::conv_to<arma::Col<double>>::from(CLI::GetParam<arma::Col<size_t>>(identifier));
+  if (output.is_empty())
+  {
+    std::cout << "Nil" << std::endl;
+    return NULL;
+  }
+  else
+  {
+  void *ptr = GetMemory(output);
+  std::cout << ptr << std::endl;
+  return ptr;
+  }
+}
+
 
 // Return the number of rows.
-int MLPACK_NumRows(const char *identifier)
+int MLPACK_NumRow_mat(const char *identifier)
 {
   arma::mat output = CLI::GetParam<arma::mat>(identifier);
   return output.n_rows;
 }
 
 // Return the number of cols.
-int MLPACK_NumCols(const char *identifier)
+int MLPACK_NumCol_mat(const char *identifier)
 {
   arma::mat output = CLI::GetParam<arma::mat>(identifier);
   return output.n_cols;
 }
 
-int MLPACK_RowSize(const char *identifier)
-{
-  arma::Row<size_t> output = CLI::GetParam<arma::Row<size_t>>(identifier);
-  return output.n_rows;
-}
-
-// Return the number of cols.
-int MLPACK_ColSize(const char *identifier)
-{
-  arma::Col<size_t> output = CLI::GetParam<arma::Col<size_t>>(identifier);
-  return output.n_cols;
-}
 // Return the number of elems.
-int MLPACK_NumElems(const char *identifier)
+int MLPACK_NumElem_mat(const char *identifier)
 {
   arma::mat output = CLI::GetParam<arma::mat>(identifier);
   return output.n_elem;
 }
 
+// Return the number of rows.
+int MLPACK_NumRow_umat(const char *identifier)
+{
+  arma::Mat<size_t>  output = CLI::GetParam<arma::Mat<size_t> >(identifier);
+  return output.n_rows;
+}
+
+// Return the number of cols.
+int MLPACK_NumCol_umat(const char *identifier)
+{
+  arma::Mat<size_t> output = CLI::GetParam<arma::Mat<size_t> >(identifier);
+  return output.n_cols;
+}
+
 // Return the number of elems.
-int MLPACK_NumElemsRow(const char *identifier)
+int MLPACK_NumElem_umat(const char *identifier)
+{
+  arma::Mat<size_t>  output = CLI::GetParam<arma::Mat<size_t> >(identifier);
+  return output.n_elem;
+}
+
+int MLPACK_Size_urow(const char *identifier)
 {
   arma::Row<size_t> output = CLI::GetParam<arma::Row<size_t>>(identifier);
+  return output.n_rows;
+}
+
+int MLPACK_Size_row(const char *identifier)
+{
+  arma::Row<double> output = CLI::GetParam<arma::Row<double>>(identifier);
+  return output.n_rows;
+}
+
+// Return the number of elems.
+int MLPACK_NumElem_urow(const char *identifier)
+{
+  arma::Row<size_t> output = CLI::GetParam<arma::Row<size_t>>(identifier);
+  return output.n_elem;
+}
+
+// Return the number of elems.
+int MLPACK_NumElem_row(const char *identifier)
+{
+  arma::Row<double> output = CLI::GetParam<arma::Row<double>>(identifier);
+  return output.n_elem;
+}
+
+// Return the number of cols.
+int MLPACK_Size_ucol(const char *identifier)
+{
+  arma::Col<size_t> output = CLI::GetParam<arma::Col<size_t>>(identifier);
+  return output.n_cols;
+}
+
+// Return the number of cols.
+int MLPACK_Size_col(const char *identifier)
+{
+  arma::Col<double> output = CLI::GetParam<arma::Col<double>>(identifier);
+  return output.n_cols;
+}
+
+// Return the number of elems.
+int MLPACK_NumElem_ucol(const char *identifier)
+{
+  arma::Col<size_t> output = CLI::GetParam<arma::Col<size_t>>(identifier);
+  return output.n_elem;
+}
+
+// Return the number of elems.
+int MLPACK_NumElem_col(const char *identifier)
+{
+  arma::Col<double> output = CLI::GetParam<arma::Col<double>>(identifier);
   return output.n_elem;
 }
 

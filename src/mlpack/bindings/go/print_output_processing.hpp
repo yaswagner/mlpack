@@ -15,6 +15,7 @@
 
 #include <mlpack/prereqs.hpp>
 #include "get_type.hpp"
+#include "get_arma_type.hpp"
 #include "strip_type.hpp"
 
 namespace mlpack {
@@ -72,7 +73,7 @@ void PrintOutputProcessing(
    std::cout << prefix << "var " << d.name << "Ptr MLPACK_Arma"
               << std::endl;
    std::cout << prefix << d.name << " := " << d.name
-              << "Ptr.ArmaToGonum" << GetType<T>(d)
+              << "Ptr.ArmaToGonum_" << GetArmaType<T>() << GetType<T>(d)
               << "(\""  << d.name << "\")" << std::endl;
 }
 

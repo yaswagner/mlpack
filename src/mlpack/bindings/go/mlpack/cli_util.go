@@ -23,7 +23,7 @@ func SetParamDouble(identifier string, value float64) {
   C.MLPACK_SetParamDouble(C.CString(identifier), C.double(value))
 }
 
-func SetParamInt(identifier string, value int32) {
+func SetParamInt(identifier string, value int) {
   C.MLPACK_SetParamInt(C.CString(identifier), C.int(value))
 }
 func SetParamFloat(identifier string, value float64) {
@@ -70,21 +70,21 @@ func ClearSettings() {
 }
 
 func GetParamString(identifier string) string {
-  val := string(C.MLPACK_GetParamString(C.CString(identifier)))
+  val := C.GoString(C.MLPACK_GetParamString(C.CString(identifier)))
   return val
 }
 
 func GetParamBool(identifier string) bool {
-  val := bool(C.MLPACK_GetParamString(C.CString(identifier)))
+  val := bool(C.MLPACK_GetParamBool(C.CString(identifier)))
   return val
 }
 
-func GetParamInt(identifier string) int32 {
-  val := int32(C.MLPACK_GetParamString(C.CString(identifier)))
+func GetParamInt(identifier string) int {
+  val := int(C.MLPACK_GetParamInt(C.CString(identifier)))
   return val
 }
 
 func GetParamDouble(identifier string) float64 {
-  val := float64(C.MLPACK_GetParamString(C.CString(identifier)))
+  val := float64(C.MLPACK_GetParamDouble(C.CString(identifier)))
   return val
 }

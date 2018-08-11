@@ -9,23 +9,47 @@
 extern "C" {
 #endif
 
-extern void MLPACK_ToArma(const char *identifier, const double mat[], int row, int col);
+extern void MLPACK_ToArma_mat(const char *identifier, const double mat[], int row, int col);
 
-extern void *MLPACK_ArmaPtr(const char *identifier);
+extern void *MLPACK_ArmaPtr_mat(const char *identifier);
 
-extern void *MLPACK_ArmaRowPtr(const char *identifier);
+extern void *MLPACK_ArmaPtr_umat(const char *identifier);
 
-extern int MLPACK_NumRows(const char *identifier);
+extern void *MLPACK_ArmaPtr_row(const char *identifier);
 
-extern int MLPACK_NumCols(const char *identifier);
+extern void *MLPACK_ArmaPtr_urow(const char *identifier);
 
-extern int MLPACK_NumElems(const char *identifier);
+extern void *MLPACK_ArmaPtr_col(const char *identifier);
 
-extern int MLPACK_RowSize(const char *identifier);
+extern void *MLPACK_ArmaPtr_ucol(const char *identifier);
 
-extern int MLPACK_ColSize(const char *identifier);
+extern int MLPACK_NumRow_mat(const char *identifier);
 
-extern int MLPACK_NumElemsRow(const char *identifier);
+extern int MLPACK_NumCol_mat(const char *identifier);
+
+extern int MLPACK_NumElem_mat(const char *identifier);
+
+extern int MLPACK_NumRow_umat(const char *identifier);
+
+extern int MLPACK_NumCol_umat(const char *identifier);
+
+extern int MLPACK_NumElem_umat(const char *identifier);
+
+extern int MLPACK_Size_row(const char *identifier);
+
+extern int MLPACK_Size_urow(const char *identifier);
+
+extern int MLPACK_NumElem_row(const char *identifier);
+
+extern int MLPACK_NumElem_urow(const char *identifier);
+
+extern int MLPACK_Size_col(const char *identifier);
+
+extern int MLPACK_Size_ucol(const char *identifier);
+
+extern int MLPACK_NumElem_col(const char *identifier);
+
+extern int MLPACK_NumElem_ucol(const char *identifier);
 
 #if defined(__cplusplus) || defined(c_plusplus)
 }

@@ -180,7 +180,7 @@ void PrintGo(const util::ProgramDoc& programInfo,
     if (d.required)
     {
       if (i != 0)
-        cout << "," << std::string(indent, ' ');
+        cout << ", ";
 
       CLI::GetSingleton().functionMap[d.tname]["PrintDefnInput"](d, NULL, NULL);
       counter++;

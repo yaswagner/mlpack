@@ -77,7 +77,7 @@ inline std::string GetType<size_t>(
     const typename boost::disable_if<data::HasSerialize<size_t>>::type*,
     const typename boost::disable_if<arma::is_arma_type<size_t>>::type*)
 {
-  return "Size_t";
+  return "u";
 }
 
 template<>
@@ -103,11 +103,11 @@ inline std::string GetType(
     const util::ParamData& /* d */,
     const typename boost::enable_if<arma::is_arma_type<T>>::type* = 0)
 {
-  std::string type = "Mat";
+  std::string type = "mat";
   if (T::is_row)
-    type = "Row";
+    type = "row";
   else if (T::is_col)
-    type = "Col";
+    type = "col";
 
   return type;
 }
