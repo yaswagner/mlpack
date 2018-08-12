@@ -27,6 +27,21 @@ void SetMemState(T& t, int state)
   const_cast<arma::uhword&>(t.mem_state) = state;
 }
 
+
+// // Return the number of elems.
+// template<typename T>
+// inline int NumElem(T& t, const char *identifier)
+// {
+//   if (T::is_row)
+//     arma::Row<double> output = CLI::GetParam<arma::Row<double>>(identifier);
+//   else if (T::is_col)
+//     arma::Col<double> output = CLI::GetParam<arma::Col<double>>(identifier);
+//   else
+//     arma::mat output = CLI::GetParam<arma::mat<double>>(identifier);
+//
+//   return output.n_elem;
+// }
+
 /**
  * Get the memory state of the given Armadillo object.
  */
@@ -63,44 +78,7 @@ inline typename T::elem_type* GetMemory(T& m)
   }
 }
 
-/**
- * Make an alias of a dense matrix.  If strict is true, then the alias cannot be
- * resized or pointed at new memory.
- */
-template<typename ElemType>
-arma::Mat<ElemType> MakeAlias(arma::Mat<ElemType>& input,
-                              const bool strict = true)
-{
-  // Use the advanced constructor.
-  return arma::Mat<ElemType>(input.memptr(), input.n_rows, input.n_cols, false,
-      strict);
-}
-
-/**
- * Make an alias of a dense row.  If strict is true, then the alias cannot be
- * resized or pointed at new memory.
- */
-template<typename ElemType>
-arma::Row<ElemType> MakeAlias(arma::Row<ElemType>& input,
-                              const bool strict = true)
-{
-  // Use the advanced constructor.
-  return arma::Row<ElemType>(input.memptr(), input.n_elem, false, strict);
-}
-
-/**
- * Make an alias of a dense column.  If strict is true, then the alias cannot be
- * resized or pointed at new memory.
- */
-template<typename ElemType>
-arma::Col<ElemType> MakeAlias(arma::Col<ElemType>& input,
-                              const bool strict = true)
-{
-  // Use the advanced constructor.
-  return arma::Col<ElemType>(input.memptr(), input.n_elem, false, strict);
-}
 
 } // namespace mlpack
-
 
 #endif

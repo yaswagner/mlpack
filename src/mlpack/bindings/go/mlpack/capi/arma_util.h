@@ -11,6 +11,10 @@ extern "C" {
 
 extern void MLPACK_ToArma_mat(const char *identifier, const double mat[], int row, int col);
 
+extern void MLPACK_ToArma_row(const char *identifier, const double rowvec[], int elem);
+
+extern void MLPACK_ToArma_col(const char *identifier, const double colvec[], int elem);
+
 extern void *MLPACK_ArmaPtr_mat(const char *identifier);
 
 extern void *MLPACK_ArmaPtr_umat(const char *identifier);

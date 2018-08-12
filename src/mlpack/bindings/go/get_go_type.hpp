@@ -108,7 +108,7 @@ inline std::string GetGoType(
   if (T::is_row)
     type = "mat.VecDense";
   else if (T::is_col)
-    type = "mat.Dense";
+    type = "mat.VecDense";
 
   return type;
 }

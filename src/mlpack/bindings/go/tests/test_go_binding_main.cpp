@@ -30,8 +30,12 @@ PARAM_FLAG("flag1", "Input flag, must be specified.", "f");
 PARAM_FLAG("flag2", "Input flag, must not be specified.", "F");
 PARAM_MATRIX_IN("matrix_in", "Input matrix.", "m");
 PARAM_UMATRIX_IN("umatrix_in", "Input unsigned matrix.", "u");
+PARAM_COL_IN("col_in", "Input column.", "c");
+PARAM_UCOL_IN("ucol_in", "Input unsigned column.", "");
 PARAM_ROW_IN("row_in", "Input row.", "");
 PARAM_UROW_IN("urow_in", "Input unsigned row.", "");
+PARAM_VECTOR_IN(int, "vector_in", "Input vector of numbers.", "");
+PARAM_VECTOR_IN(string, "str_vector_in", "Input vector of strings.", "");
 PARAM_MODEL_IN(GaussianKernel, "model_in", "Input model.", "");
 PARAM_FLAG("build_model", "If true, a model will be returned.", "");
 
@@ -40,8 +44,12 @@ PARAM_INT_OUT("int_out", "Output int, will be 13.");
 PARAM_DOUBLE_OUT("double_out", "Output double, will be 5.0.");
 PARAM_MATRIX_OUT("matrix_out", "Output matrix.", "M");
 PARAM_UMATRIX_OUT("umatrix_out", "Output unsigned matrix.", "U");
+PARAM_COL_OUT("col_out", "Output column. 2x input column", "");
+PARAM_UCOL_OUT("ucol_out", "Output unsigned column. 2x input column.", "");
 PARAM_ROW_OUT("row_out", "Output row.  2x input row.", "");
 PARAM_UROW_OUT("urow_out", "Output unsigned row.  2x input row.", "");
+PARAM_VECTOR_OUT(int, "vector_out", "Output vector.", "");
+PARAM_VECTOR_OUT(string, "str_vector_out", "Output string vector.", "");
 PARAM_MODEL_OUT(GaussianKernel, "model_out", "Output model, with twice the "
     "bandwidth.", "");
 PARAM_DOUBLE_OUT("model_bw_out", "The bandwidth of the model.");
@@ -93,6 +101,23 @@ static void mlpackMain()
     CLI::GetParam<arma::Mat<size_t>>("umatrix_out") = move(out);
   }
 
+  // An input column or row should have all elements multiplied by two.
+  if (CLI::HasParam("col_in"))
+  {
+    arma::vec out = move(CLI::GetParam<arma::vec>("col_in"));
+    out *= 2.0;
+
+    CLI::GetParam<arma::vec>("col_out") = move(out);
+  }
+
+  if (CLI::HasParam("ucol_in"))
+  {
+    arma::Col<size_t> out =
+        move(CLI::GetParam<arma::Col<size_t>>("ucol_in"));
+    out *= 2;
+
+    CLI::GetParam<arma::Col<size_t>>("ucol_out") = move(out);
+  }
 
   if (CLI::HasParam("row_in"))
   {
@@ -109,6 +134,23 @@ static void mlpackMain()
     out *= 2;
 
     CLI::GetParam<arma::Row<size_t>>("urow_out") = move(out);
+  }
+
+  // Vector arguments should have the last element removed.
+  if (CLI::HasParam("vector_in"))
+  {
+    vector<int> out = move(CLI::GetParam<vector<int>>("vector_in"));
+    out.pop_back();
+
+    CLI::GetParam<vector<int>>("vector_out") = move(out);
+  }
+
+  if (CLI::HasParam("str_vector_in"))
+  {
+    vector<string> out = move(CLI::GetParam<vector<string>>("str_vector_in"));
+    out.pop_back();
+
+    CLI::GetParam<vector<string>>("str_vector_out") = move(out);
   }
 
   // If we got a request to build a model, then build it.
