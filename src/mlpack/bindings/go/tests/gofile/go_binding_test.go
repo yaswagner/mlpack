@@ -63,7 +63,7 @@ func TestRunBindingWrongString(t *testing.T) {
 }
 
 func TestRunBindingWrongInt(t *testing.T) {
-	t.Log("Test that if we give the wrong string, we should get wrong results.")
+	t.Log("Test that if we give the wrong int, we should get wrong results.")
 	param := mlpack.InitializeTest_go_binding()
 	param.Flag1 = true
 	d := 4.0
@@ -218,7 +218,7 @@ func TestGonumRow(t *testing.T) {
 		if row_out.AtVec(i) != x.AtVec(i)*2 {
 			val := row_out.AtVec(i)
 			expected := x.AtVec(i) * 2
-			t.Errorf("Error. Value at [i,j] : %v. Expected value : %v", val, expected)
+			t.Errorf("Error. Value at [i] : %v. Expected value : %v", val, expected)
 		}
 	}
 }
@@ -245,7 +245,61 @@ func TestGonumRowForceCopy(t *testing.T) {
 		if row_out.AtVec(i) != x.AtVec(i)*2 {
 			val := row_out.AtVec(i)
 			expected := x.AtVec(i) * 2
-			t.Errorf("Error. Value at [i,j] : %v. Expected value : %v", val, expected)
+			t.Errorf("Error. Value at [i] : %v. Expected value : %v", val, expected)
+		}
+	}
+}
+
+func TestGonumCol(t *testing.T) {
+	t.Log("Test a column vector input parameter.")
+	x := mat.NewVecDense(9, []float64{
+		1, 2, 3, 4, 5, 6, 7, 8, 9,
+	})
+	y := mat.VecDenseCopyOf(x)
+
+	param := mlpack.InitializeTest_go_binding()
+	param.Col_in = y
+	d := 4.0
+	i := 12
+	s := "hello"
+	col_out, _, _, _, _, _, _, _, _, _, _, _, _ := mlpack.Test_go_binding(d, i, s, param)
+
+	cols, _ := col_out.Dims()
+	if cols != 9 {
+		t.Errorf("Error. Wrong shape.")
+	}
+	for i := 0; i < cols; i++ {
+		if col_out.AtVec(i) != x.AtVec(i)*2 {
+			val := col_out.AtVec(i)
+			expected := x.AtVec(i) * 2
+			t.Errorf("Error. Value at [i] : %v. Expected value : %v", val, expected)
+		}
+	}
+}
+
+func TestGonumColForceCopy(t *testing.T) {
+	t.Log("Test a column vector input parameter.")
+	x := mat.NewVecDense(9, []float64{
+		1, 2, 3, 4, 5, 6, 7, 8, 9,
+	})
+
+	param := mlpack.InitializeTest_go_binding()
+	param.Copy_all_inputs = true
+	param.Col_in = x
+	d := 4.0
+	i := 12
+	s := "hello"
+	col_out, _, _, _, _, _, _, _, _, _, _, _, _ := mlpack.Test_go_binding(d, i, s, param)
+
+	cols, _ := col_out.Dims()
+	if cols != 9 {
+		t.Errorf("Error. Wrong shape.")
+	}
+	for i := 0; i < cols; i++ {
+		if col_out.AtVec(i) != x.AtVec(i)*2 {
+			val := col_out.AtVec(i)
+			expected := x.AtVec(i) * 2
+			t.Errorf("Error. Value at [i] : %v. Expected value : %v", val, expected)
 		}
 	}
 }

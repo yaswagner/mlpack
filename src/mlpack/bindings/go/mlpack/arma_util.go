@@ -257,7 +257,7 @@ func (m *MLPACK_Arma) ArmaToGonum_col(identifier string) *mat.VecDense {
 		time.Sleep(time.Second)
 
 		// Initialize result matrix.
-		output := mat.NewVecDense(1, data)
+		output := mat.NewVecDense(e, data)
 
 		// Return gonum vector.
 		return output
@@ -278,13 +278,13 @@ func (m *MLPACK_Arma) ArmaToGonum_ucol(identifier string) *mat.VecDense {
 	// Convert pointer to slice of data, to then pass it to a gonum matrix.
 	array := (*[1<<30 - 1]float64)(m.mem)
 	if array != nil {
-		data := array[:e]
+		data := array[:]
 
 		runtime.GC()
 		time.Sleep(time.Second)
 
 		// Initialize result matrix.
-		output := mat.NewVecDense(1, data)
+		output := mat.NewVecDense(e, data)
 
 		// Return gonum vector.
 		return output
