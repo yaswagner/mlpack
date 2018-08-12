@@ -86,15 +86,14 @@ void PrintInputProcessing(
       else
       std::cout << "true";
     }
+    else if (GetType<T>(d) == "VecString" || GetType<T>(d) == "VecInt")
+    {
+      std::cout << "nil";
+    }
     std::cout << " {"  << std::endl;
     std::cout << prefix << "  SetParam" << GetType<T>(d) << "(\""
         << d.name << "\", param.";
-    if (GetType<T>(d) == "string")
-      std::cout << paramName << ".encode(\"UTF-8\")";
-    else if (GetType<T>(d) == "vector[string]")
-      std::cout << "[i.encode(\"UTF-8\") for i in " << paramName << "]";
-    else
-      std::cout << goParamName;
+    std::cout << goParamName;
     std::cout << ")" << std::endl;
     std::cout << prefix << "  SetPassed(\"" << d.name << "\")"
         << std::endl;
@@ -109,14 +108,8 @@ void PrintInputProcessing(
     std::string lowercaseParamName = d.name;
     lowercaseParamName[0]  = std::tolower(lowercaseParamName[0]);
     std::cout << prefix << "SetParam" << GetType<T>(d) << "(\""
-        << d.name << "\", ";
-    if (GetType<T>(d) == "string")
-      std::cout << paramName << ".encode(\"UTF-8\")";
-    else if (GetType<T>(d) == "vector[string]")
-      std::cout << "[i.encode(\"UTF-8\") for i in " <<paramName << "]";
-    else
-      std::cout <<lowercaseParamName;
-    std::cout << ")" << std::endl;
+              << lowercaseParamName << "\", "
+              << d.name << ")" << std::endl;
     std::cout << prefix << "SetPassed(\"" << d.name << "\")"
         << std::endl;
   }

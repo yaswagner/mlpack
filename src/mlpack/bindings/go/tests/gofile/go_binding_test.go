@@ -14,7 +14,7 @@ func TestRunBindingNoFlag(t *testing.T) {
 	d := 4.0
 	i := 12
 	s := "hello"
-	_, double_out, int_out, _, _, _, _, _, string_out, _, _, _ := mlpack.Test_go_binding(d, i, s, param)
+	_, double_out, int_out, _, _, _, _, _, string_out, _, _, _, _ := mlpack.Test_go_binding(d, i, s, param)
 
 	if double_out == 5.0 {
 		t.Errorf("Error. Wrong double_out value.")
@@ -35,7 +35,7 @@ func TestRunBindingCorrectly(t *testing.T) {
 	d := 4.0
 	i := 12
 	s := "hello"
-	_, double_out, int_out, _, _, _, _, _, string_out, _, _, _ := mlpack.Test_go_binding(d, i, s, param)
+	_, double_out, int_out, _, _, _, _, _, string_out, _, _, _, _ := mlpack.Test_go_binding(d, i, s, param)
 
 	if double_out != 5.0 {
 		t.Errorf("Error. Wrong double_out value.")
@@ -55,7 +55,7 @@ func TestRunBindingWrongString(t *testing.T) {
 	d := 4.0
 	i := 12
 	s := "goodbye"
-	_, _, _, _, _, _, _, _, string_out, _, _, _ := mlpack.Test_go_binding(d, i, s, param)
+	_, _, _, _, _, _, _, _, string_out, _, _, _, _ := mlpack.Test_go_binding(d, i, s, param)
 
 	if string_out == "hello2" {
 		t.Errorf("Error. Wrong string_out value.")
@@ -69,7 +69,7 @@ func TestRunBindingWrongInt(t *testing.T) {
 	d := 4.0
 	i := 15
 	s := "hello"
-	_, _, int_out, _, _, _, _, _, _, _, _, _ := mlpack.Test_go_binding(d, i, s, param)
+	_, _, int_out, _, _, _, _, _, _, _, _, _, _ := mlpack.Test_go_binding(d, i, s, param)
 
 	if int_out == 13 {
 		t.Errorf("Error. Wrong int_out value.")
@@ -84,7 +84,7 @@ func TestRunBindingWrongDouble(t *testing.T) {
 	d := 2.0
 	i := 12
 	s := "hello"
-	_, double_out, _, _, _, _, _, _, _, _, _, _ := mlpack.Test_go_binding(d, i, s, param)
+	_, double_out, _, _, _, _, _, _, _, _, _, _, _ := mlpack.Test_go_binding(d, i, s, param)
 
 	if double_out == 5.0 {
 		t.Errorf("Error. Wrong double_out value.")
@@ -99,7 +99,7 @@ func TestRunBadFlag(t *testing.T) {
 	d := 2.0
 	i := 12
 	s := "hello"
-	_, double_out, int_out, _, _, _, _, _, string_out, _, _, _ := mlpack.Test_go_binding(d, i, s, param)
+	_, double_out, int_out, _, _, _, _, _, string_out, _, _, _, _ := mlpack.Test_go_binding(d, i, s, param)
 
 	if double_out == 5.0 {
 		t.Errorf("Error. Wrong double_out value.")
@@ -132,7 +132,7 @@ func TestGonumMatrix(t *testing.T) {
 	d := 4.0
 	i := 12
 	s := "hello"
-	_, _, _, matrix_out, _, _, _, _, _, _, _, _ := mlpack.Test_go_binding(d, i, s, param)
+	_, _, _, matrix_out, _, _, _, _, _, _, _, _, _ := mlpack.Test_go_binding(d, i, s, param)
 
 	rows, cols := matrix_out.Dims()
 	if rows != 3 || cols != 4 {
@@ -163,7 +163,7 @@ func TestGonumMatrixForceCopy(t *testing.T) {
 	d := 4.0
 	i := 12
 	s := "hello"
-	_, _, _, matrix_out, _, _, _, _, _, _, _, _ := mlpack.Test_go_binding(d, i, s, param)
+	_, _, _, matrix_out, _, _, _, _, _, _, _, _, _ := mlpack.Test_go_binding(d, i, s, param)
 
 	rows, cols := matrix_out.Dims()
 
@@ -208,7 +208,7 @@ func TestGonumRow(t *testing.T) {
 	d := 4.0
 	i := 12
 	s := "hello"
-	_, _, _, _, _, _, row_out, _, _, _, _, _ := mlpack.Test_go_binding(d, i, s, param)
+	_, _, _, _, _, _, row_out, _, _, _, _, _, _ := mlpack.Test_go_binding(d, i, s, param)
 
 	rows, _ := row_out.Dims()
 	if rows != 9 {
@@ -235,7 +235,7 @@ func TestGonumRowForceCopy(t *testing.T) {
 	d := 4.0
 	i := 12
 	s := "hello"
-	_, _, _, _, _, _, row_out, _, _, _, _, _ := mlpack.Test_go_binding(d, i, s, param)
+	_, _, _, _, _, _, row_out, _, _, _, _, _, _ := mlpack.Test_go_binding(d, i, s, param)
 
 	rows, _ := row_out.Dims()
 	if rows != 9 {
@@ -258,11 +258,11 @@ func TestModel(t *testing.T) {
 	d := 4.0
 	i := 12
 	s := "hello"
-	_, _, _, _, _, model_out, _, _, _, _, _, _ := mlpack.Test_go_binding(d, i, s, param)
+	_, _, _, _, _, model_out, _, _, _, _, _, _, _ := mlpack.Test_go_binding(d, i, s, param)
 
 	param2 := mlpack.InitializeTest_go_binding()
 	param2.Model_in = &model_out
-	_, _, _, _, model_bw_out, _, _, _, _, _, _, _ := mlpack.Test_go_binding(d, i, s, param2)
+	_, _, _, _, model_bw_out, _, _, _, _, _, _, _, _ := mlpack.Test_go_binding(d, i, s, param2)
 
 	if model_bw_out != 20.0 {
 		t.Errorf("Error. Wrong model.")
@@ -277,16 +277,16 @@ func TestModelForceCopy(t *testing.T) {
 	d := 4.0
 	i := 12
 	s := "hello"
-	_, _, _, _, _, model_out, _, _, _, _, _, _ := mlpack.Test_go_binding(d, i, s, param)
+	_, _, _, _, _, model_out, _, _, _, _, _, _, _ := mlpack.Test_go_binding(d, i, s, param)
 
 	param2 := mlpack.InitializeTest_go_binding()
 	param2.Model_in = &model_out
 	param2.Copy_all_inputs = true
-	_, _, _, _, model_bw_out, _, _, _, _, _, _, _ := mlpack.Test_go_binding(d, i, s, param2)
+	_, _, _, _, model_bw_out, _, _, _, _, _, _, _, _ := mlpack.Test_go_binding(d, i, s, param2)
 
 	param3 := mlpack.InitializeTest_go_binding()
 	param3.Model_in = &model_out
-	_, _, _, _, model_bw_out2, _, _, _, _, _, _, _ := mlpack.Test_go_binding(d, i, s, param3)
+	_, _, _, _, model_bw_out2, _, _, _, _, _, _, _, _ := mlpack.Test_go_binding(d, i, s, param3)
 
 	if model_bw_out != 20.0 {
 		t.Errorf("Error. model_bw_out value: %v. model_bw_out expected value: 20.0.", model_bw_out)

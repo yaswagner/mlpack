@@ -76,6 +76,7 @@ extern "C" void MLPACK_SetParamPtr(const char *identifier, const double *ptr, co
   util::SetParamPtr(identifier, ptr, copy);
 }
 
+
 extern "C" bool MLPACK_HasParam(const char *identifier)
 {
   return CLI::HasParam(identifier);
@@ -102,8 +103,31 @@ extern "C" int MLPACK_GetParamInt(const char *identifier)
 
 extern "C" bool MLPACK_GetParamBool(const char *identifier)
 {
-  bool val= CLI::GetParam<bool>(identifier);
+  bool val = CLI::GetParam<bool>(identifier);
   return val;
 }
 
+extern "C" void *MLPACK_GetVecIntPtr(const char *identifier)
+{
+  // std::vector<int> vec = CLI::GetParam<std::vector<int>>(identifier);
+  // return vec.get_allocator();
+}
+
+extern "C" void *MLPACK_GetVecStringPtr(const char *identifier)
+{
+  // std::vector<std::string> vec = CLI::GetParam<std::vector<std::string>>(identifier);
+  // return vec.get_allocator();
+}
+
+extern "C" int MLPACK_VecIntSize(const char *identifier)
+{
+  std::vector<int> output = CLI::GetParam<std::vector<int>>(identifier);
+  return output.size();
+}
+
+extern "C" int MLPACK_VecStringSize(const char *identifier)
+{
+  std::vector<std::string> output = CLI::GetParam<std::vector<std::string>>(identifier);
+  return output.size();
+}
 } // namespace mlpack

@@ -47,6 +47,14 @@ extern int MLPACK_GetParamInt(const char *identifier);
 
 extern bool MLPACK_GetParamBool(const char *identifier);
 
+extern void *MLPACK_GetVecIntPtr(const char *identifier);
+
+extern void *MLPACK_GetVecStringPtr(const char *identifier);
+
+extern int MLPACK_VecIntSize(const char *identifier);
+
+extern int MLPACK_VecStringSize(const char *identifier);
+
 #if defined(__cplusplus) || defined(c_plusplus)
 }
 #endif

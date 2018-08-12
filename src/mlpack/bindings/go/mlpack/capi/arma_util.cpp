@@ -210,7 +210,7 @@ int MLPACK_NumElem_ucol(const char *identifier)
 }
 
 // Return the number of elems.
-int MLPACK_NumElem(const char *identifier)
+int MLPACK_NumElem_col(const char *identifier)
 {
   arma::Col<double> output = CLI::GetParam<arma::Col<double>>(identifier);
   return output.n_elem;

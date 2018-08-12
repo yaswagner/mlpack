@@ -42,15 +42,7 @@ void PrintOutputProcessing(
    */
   std::cout << prefix << d.name << " := GetParam" << GetType<T>(d)
       << "(\"" << d.name << "\")" << std::endl;
-  if (GetType<T>(d) == "string")
-  {
-    std::cout << std::endl << prefix << "result = result.decode(\"UTF-8\")";
-  }
-  else if (GetType<T>(d) == "vector[string]")
-  {
-    std::cout << std::endl << prefix
-        << "result = [x.decode(\"UTF-8\") for x in result]";
-  }
+
 }
 
 /**

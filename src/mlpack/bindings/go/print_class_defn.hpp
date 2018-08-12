@@ -226,15 +226,9 @@ void PrintClassDefnGo(
               << std::endl;
    std::cout << " m.mem = C.MLPACK_Get" << strippedType
               << "Ptr(C.CString(identifier))" << std::endl;
-   std::cout << " runtime.SetFinalizer(m, free"
-              << strippedType << ")" << std::endl;
+   std::cout << " runtime.KeepAlive(m)" << std::endl;
    std::cout << "}" << std::endl;
-   std::cout << std::endl;
-   std::cout << std::endl;
-   std::cout << "func free" << strippedType
-              << "(m *" << strippedType << ") {" << std::endl;
-   std::cout << " C.free(unsafe.Pointer(m.mem))" << std::endl;
-   std::cout << "}" << std::endl;
+
    std::cout << std::endl;
    std::cout << "func (m *" << strippedType << ") get"
               << strippedType << "(identifier string) {" << std::endl;

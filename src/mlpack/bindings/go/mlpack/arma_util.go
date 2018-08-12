@@ -41,22 +41,12 @@ func (m *MLPACK_Arma) allocArmaPtr_umat(identifier string) {
 	runtime.KeepAlive(m)
 }
 
-// // Function free is used to free memory when the object leaves Go's scope.
-// func free_umat(m *MLPACK_Arma) {
-// 	C.free(unsafe.Pointer(m.mem))
-// }
-
 // Function alloc allocates a C memory Pointer via cgo and registers the finalizer
 // in order to free the C memory once the input has been registered in Go.
 func (m *MLPACK_Arma) allocArmaPtr_row(identifier string) {
 	m.mem = C.MLPACK_ArmaPtr_row(C.CString(identifier))
 	runtime.KeepAlive(m)
 }
-
-// // Function free is used to free memory when the object leaves Go's scope.
-// func free_row(m *MLPACK_Arma) {
-// 	C.free(unsafe.Pointer(m.mem))
-// }
 
 // Function alloc allocates a C memory Pointer via cgo and registers the finalizer
 // in order to free the C memory once the input has been registered in Go.
@@ -65,11 +55,6 @@ func (m *MLPACK_Arma) allocArmaPtr_urow(identifier string) {
 	runtime.KeepAlive(m)
 }
 
-// // Function free is used to free memory when the object leaves Go's scope.
-// func free_urow(m *MLPACK_Arma) {
-// 	C.free(unsafe.Pointer(m.mem))
-// }
-
 // Function alloc allocates a C memory Pointer via cgo and registers the finalizer
 // in order to free the C memory once the input has been registered in Go.
 func (m *MLPACK_Arma) allocArmaPtr_col(identifier string) {
@@ -77,22 +62,12 @@ func (m *MLPACK_Arma) allocArmaPtr_col(identifier string) {
 	runtime.KeepAlive(m)
 }
 
-// // Function free is used to free memory when the object leaves Go's scope.
-// func free_col(m *MLPACK_Arma) {
-// 	C.free(unsafe.Pointer(m.mem))
-// }
-
 // Function alloc allocates a C memory Pointer via cgo and registers the finalizer
 // in order to free the C memory once the input has been registered in Go.
 func (m *MLPACK_Arma) allocArmaPtr_ucol(identifier string) {
 	m.mem = C.MLPACK_ArmaPtr_ucol(C.CString(identifier))
 	runtime.KeepAlive(m)
 }
-
-// // Function free is used to free memory when the object leaves Go's scope.
-// func free_ucol(m *MLPACK_Arma) {
-// 	C.free(unsafe.Pointer(m.mem))
-// }
 
 // GonumToArma passes a gonum matrix to C by using it's gonums underlying blas64.
 func GonumToArma_mat(identifier string, m *mat.Dense) {
@@ -264,7 +239,7 @@ func (m *MLPACK_Arma) ArmaToGonum_urow(identifier string) *mat.VecDense {
 }
 
 // GonumToArma passes a gonum matrix to C by using it's gonums underlying blas64.
-func (m *MLPACK_Arma) ArmaToGonum_col(identifier string) *mat.Dense {
+func (m *MLPACK_Arma) ArmaToGonum_col(identifier string) *mat.VecDense {
 	// Get matrix dimension, underlying blas64General matrix, and data.
 	e := int(C.MLPACK_NumElem_col(C.CString(identifier)))
 
@@ -282,7 +257,7 @@ func (m *MLPACK_Arma) ArmaToGonum_col(identifier string) *mat.Dense {
 		time.Sleep(time.Second)
 
 		// Initialize result matrix.
-		output := mat.NewDense(1, e, data)
+		output := mat.NewVecDense(1, data)
 
 		// Return gonum vector.
 		return output
@@ -291,7 +266,7 @@ func (m *MLPACK_Arma) ArmaToGonum_col(identifier string) *mat.Dense {
 }
 
 // GonumToArma passes a gonum matrix to C by using it's gonums underlying blas64.
-func (m *MLPACK_Arma) ArmaToGonum_ucol(identifier string) *mat.Dense {
+func (m *MLPACK_Arma) ArmaToGonum_ucol(identifier string) *mat.VecDense {
 	// Get matrix dimension, underlying blas64General matrix, and data.
 	e := int(C.MLPACK_NumElem_ucol(C.CString(identifier)))
 
@@ -309,7 +284,7 @@ func (m *MLPACK_Arma) ArmaToGonum_ucol(identifier string) *mat.Dense {
 		time.Sleep(time.Second)
 
 		// Initialize result matrix.
-		output := mat.NewDense(1, e, data)
+		output := mat.NewVecDense(1, data)
 
 		// Return gonum vector.
 		return output
